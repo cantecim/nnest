@@ -16,16 +16,16 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(connectionName?: string): TypeOrmModuleOptions {
     this.logger.log('initializing typeorm configuration');
     let conf: TypeOrmModuleOptions = {
-      type: this.configService.get<string>(
+      type: this.configService.get(
         'DATABASE_DRIVER',
         'postgres',
       ) as any,
       host: this.configService.get<string>('DATABASE_HOST'),
-      port: this.configService.get<number>('DATABASE_PORT'),
+      port: Number(this.configService.get('DATABASE_PORT')),
       username: this.configService.get<string>('DATABASE_USERNAME'),
       password: this.configService.get<string>('DATABASE_PASSWORD'),
       database: this.configService.get<string>('DATABASE_NAME'),
-      migrationsRun: this.configService.get<boolean>('DATABASE_MIGRATIONS_RUN'),
+      migrationsRun: this.configService.get('DATABASE_MIGRATIONS_RUN') == 'true',
       entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       migrations: [`${__dirname}/../migrations/*.{ts,js}`],
       logging: process.env.NODE_ENV !== 'production',
@@ -42,11 +42,12 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     this.logger.debug('overridden logging method of PlatformTools of typeorm');
 
     if (
-      (this.configService.get<boolean>('SQLITE_IN_DEV') &&
+      (this.configService.get('SQLITE_IN_DEV') == 'true' &&
         process.env.NODE_ENV == 'development') ||
       process.env.NODE_ENV == 'test'
     ) {
       // override required configurations to use sqlite
+      this.logger.debug('forcing to use sqlite');
       conf = Object.assign(conf, {
         type: 'sqlite',
         database: process.env.NODE_ENV == 'test' ? ':memory:' : 'db.sqlite3',
@@ -62,7 +63,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     }
 
     this.logger.log(
-      `env is ${process.env.NODE_ENV}, we are using ${conf.type} driver`,
+      `env is ${process.env.NODE_ENV} and we are using ${conf.type} driver`,
     );
 
     return conf;

@@ -1,11 +1,13 @@
 import 'module-alias/register';
+import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { globalLogger } from './winston/winston.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ApiDataPropertyMiddleware } from './api/middlewares/api-data-property.middleware';
-import { ValidationPipe, ValidationError, BadRequestException } from '@nestjs/common';
+import { AppModule } from './app.module';
 import { EntityValidationExceptionFilter } from './typeorm/entity-validation-exception-filter';
+import { globalLogger } from './winston/winston.module';
 
 
 async function bootstrap() {
@@ -25,6 +27,15 @@ async function bootstrap() {
     }
   }));
   app.useGlobalFilters(new EntityValidationExceptionFilter());
+
+  const options = new DocumentBuilder()
+    .setTitle('REST API Documentations')
+    .setDescription('You can see all the information about our REST APIs and try them on the page')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(process.env.PORT);
 }
 bootstrap();

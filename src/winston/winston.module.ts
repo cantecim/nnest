@@ -1,4 +1,4 @@
-import { Logger as NestLogger, Module } from '@nestjs/common';
+import { Logger as NestLogger, Module, Global } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   utilities as nestWinstonModuleUtilities,
@@ -37,6 +37,8 @@ export const globalLogger = NestWinstonModule.createLogger(
 NestWinstonModule.createLogger = (options?: WinstonModuleOptions) => {
   return globalLogger;
 };
+
+@Global()
 @Module({
   imports: [
     ConfigModule,
@@ -49,8 +51,8 @@ NestWinstonModule.createLogger = (options?: WinstonModuleOptions) => {
           'winston',
         );
         return Object.assign({}, loggerOptions, {
-          level: config.get<string>('LOG_LEVEL'),
-          transports: [createConsoleTransport(config.get<string>('LOG_LEVEL'))],
+          level: config.get('LOG_LEVEL'),
+          transports: [createConsoleTransport(config.get('LOG_LEVEL'))],
         } as WinstonModuleOptions);
       },
       inject: [ConfigService],
