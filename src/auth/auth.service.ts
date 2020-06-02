@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from '@nnest/users/users.service';
 import { RequestUserDto } from './dtos/request-user-dto';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, classToPlain } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayloadDto } from './dtos/jwt-payload-dto';
 import { LoginResponseDto } from './dtos/login-response-dto';
@@ -34,10 +34,15 @@ export class AuthService {
     };
   }
 
-  async register(user: RegisterDto): Promise<User> {
-    console.log(user);
+  async register(user: RegisterDto): Promise<LoginResponseDto> {
     user.password = await AuthService.hashPassword(user.password);
-    return this.usersService.register(user);
+    const savedUser: User = await this.usersService.register(user);
+    const payload: JwtPayloadDto = plainToClass(JwtPayloadDto, { ...savedUser, sub: savedUser.id }, {
+      excludeExtraneousValues: true
+    });
+    return {
+      access_token: this.jwtService.sign(classToPlain(payload))
+    }
   }
 
   public static async hashPassword(password: string): Promise<string> {

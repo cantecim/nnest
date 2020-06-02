@@ -3,7 +3,7 @@ import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
 import { User, UserEntityProperties } from './models/user.entity';
 import { Repository, FindConditions } from 'typeorm';
 import { plainToClass, classToPlain } from 'class-transformer';
-import { SafeValidateOrReject } from '@nnest/api/helpers/safe-validate-or-reject';
+import { entityValidateOrReject } from '@nnest/typeorm/helpers/entity-validate-or-reject';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +13,7 @@ export class UsersService {
 
   private async save(user: UserEntityProperties): Promise<User> {
     const u = plainToClass(User, user);
-    await SafeValidateOrReject(u, { validationError: { target: false, value: false } });
+    await entityValidateOrReject(u, { validationError: { target: false, value: false } });
     return await this.userRepository.save(u);
   }
 

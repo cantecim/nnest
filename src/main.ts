@@ -5,7 +5,7 @@ import { globalLogger } from './winston/winston.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ApiDataPropertyMiddleware } from './api/middlewares/api-data-property.middleware';
 import { ValidationPipe, ValidationError, BadRequestException } from '@nestjs/common';
-import { ValidationErrorFilter } from './validation-error-filter';
+import { EntityValidationExceptionFilter } from './typeorm/entity-validation-exception-filter';
 
 
 async function bootstrap() {
@@ -24,7 +24,7 @@ async function bootstrap() {
       value: false
     }
   }));
-  app.useGlobalFilters(new ValidationErrorFilter());
+  app.useGlobalFilters(new EntityValidationExceptionFilter());
   await app.listen(process.env.PORT);
 }
 bootstrap();

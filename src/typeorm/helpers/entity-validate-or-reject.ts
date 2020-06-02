@@ -1,17 +1,17 @@
 import { ValidatorOptions, validate } from 'class-validator';
-import { ValidationException } from '../exceptions/validation-exception';
+import { EntityValidationException } from '../exceptions/entity-validation-exception';
 
-export async function safeValidateOrReject(
+export async function entityValidateOrReject(
   object: Object,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
-export async function safeValidateOrReject(
+export async function entityValidateOrReject(
   schemaName: string,
   object: Object,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
 
-export async function safeValidateOrReject(
+export async function entityValidateOrReject(
   objectOrSchemaName: object | string,
   objectOrValidationOptions: object | ValidatorOptions,
   maybeValidatorOptions?: ValidatorOptions,
@@ -30,6 +30,6 @@ export async function safeValidateOrReject(
     );
   }
   if (errors.length > 0) {
-    throw new ValidationException(errors);
+    throw new EntityValidationException(errors);
   }
 }
