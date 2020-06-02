@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build:watch",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "typescript",
+				"fileLocation": "relative",
+				"pattern": {
+					"regexp": "^(.*?):([0-9]*):([0-9]*) - (.*)$",
+					"file": 1,
+					"location": 2,
+					"code": 3,
+					"message": 4
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^\\[\\d{1,2}:\\d{1,2}:\\d{1,2}\\] Found ([1-9]+\\d*) errors\\. Watching for file changes\\.",
+					"endsPattern": "^\\[\\d{1,2}:\\d{1,2}:\\d{1,2}\\] Found 0 errors\\. Watching for file changes\\."
+				}
+			},
+			"label": "npm: build:watch",
+			"detail": "nest build -w"
+		}
+	]
+}
