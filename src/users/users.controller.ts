@@ -16,23 +16,5 @@ export class UsersController {
   ) {
     logger.setContext(this.constructor.name);
   }
-
-  @Get()
-  public async index(): Promise<string> {
-    let u = new User();
-    u.name = 'Can Tecim';
-    u.username = 'cantecim';
-    u.email = 'can.tecim@gmail.com';
-    u.password = await AuthService.hashPassword('123');
-    u.save()    
-    try {
-      await this.userService.register({
-        username: 'cantecim',
-      });
-    } catch (e) {
-      throw e;
-    }
-    return 'Hello this is the index of user resource';
-  }
   
 }
