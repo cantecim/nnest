@@ -293,5 +293,8 @@ lerna-debug.log*
 *.sqlite3
 *.db
 
+# Auto-generated graphql schema file
+src/schema.gql
+
 # pyenv files
 .python-version

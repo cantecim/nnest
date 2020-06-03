@@ -5,6 +5,7 @@ import { User } from './models/user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { PassportModule } from '@nestjs/passport';
+import { UsersResolver } from './users.resolver';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, UsersResolver],
   exports: [UsersService],
 })
 export class UsersModule {}
