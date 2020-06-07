@@ -14,10 +14,10 @@ Another starter for [Nest](https://github.com/nestjs/nest)
 - Passport (@nestjs/passport passport passport-local dev:@types/passport-local)
 - JWT Authentication (@nestjs/jwt passport-jwt dev:@types/passport-jwt)
 - Class Transformer and Class Validator (class-transformer class-validator)
-- Feature ready "typeorm" module see [Features]((#features)) section for details
-- Feature ready "users" module see [Features]((#features)) section for details
-- Feature ready "auth" module see [Features]((#features)) section for details
-- custom "api" module see [Features]((#features)) section for details
+- Feature ready "typeorm" module see [Features](#features) section for details
+- Feature ready "users" module see [Features](#features) section for details
+- Feature ready "auth" module see [Features](#features) section for details
+- custom "api" module see [Features](#features) section for details
 
 ## Features
 
