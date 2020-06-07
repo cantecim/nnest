@@ -1,6 +1,7 @@
 import { ValidatorOptions, validate } from 'class-validator';
 import { EntityValidationException } from '../exceptions/entity-validation-exception';
 
+export const defaultValidatorOptions: ValidatorOptions = { validationError: { target: false, value: false } };
 export async function entityValidateOrReject(
   object: Object,
   validatorOptions?: ValidatorOptions,
@@ -24,6 +25,9 @@ export async function entityValidateOrReject(
       maybeValidatorOptions,
     );
   } else {
+    if(!objectOrValidationOptions) {
+      objectOrValidationOptions = defaultValidatorOptions;
+    }
     errors = await validate(
       objectOrSchemaName as object,
       objectOrValidationOptions as ValidatorOptions,

@@ -13,7 +13,9 @@ export class UsersService {
 
   private async save(user: UserEntityProperties): Promise<User> {
     const u = plainToClass(User, user);
-    await entityValidateOrReject(u, { validationError: { target: false, value: false } });
+    // No need to validate here in thanks to BaseEntity hook,
+    // This line is left because to show it in documentation
+    await entityValidateOrReject(u);
     return await this.userRepository.save(u);
   }
 

@@ -6,8 +6,8 @@ import {
   BeforeInsert,
   BeforeUpdate,
 } from 'typeorm';
-import { validateOrReject } from 'class-validator';
 import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
+import { entityValidateOrReject } from '../helpers/entity-validate-or-reject';
 
 @ObjectType({
   isAbstract: true
@@ -28,6 +28,6 @@ export abstract class BaseEntity extends TypeOrmBaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   async validate() {
-    await validateOrReject(this);
+    await entityValidateOrReject(this);
   }
 }
