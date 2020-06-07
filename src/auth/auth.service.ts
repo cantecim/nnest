@@ -49,4 +49,12 @@ export class AuthService {
     const saltRounds = 10;
     return bcrypt.hash(password, saltRounds);
   }
+
+  async isEmailAvailable(email: string) : Promise<boolean> {
+    return this.usersService.isEmailAvailable(email);
+  }
+
+  async isUsernameAvailable(username: string) : Promise<boolean> {
+    return this.usersService.isUsernameAvailable(username);
+  }
 }

@@ -41,4 +41,16 @@ export class UsersService {
       [fieldName ?? 'username']: fieldValue,
     } as FindConditions<User>);
   }
+
+  async isEmailAvailable(email: string) : Promise<boolean> {
+    return await this.userRepository.count({
+      email
+    }) == 0
+  }
+
+  async isUsernameAvailable(username: string) : Promise<boolean> {
+    return await this.userRepository.count({
+      username
+    }) == 0
+  }
 }
