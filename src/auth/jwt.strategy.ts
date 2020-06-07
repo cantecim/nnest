@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayloadDto } from './dtos/jwt-payload-dto';
+import { ConfigurationsEnum } from '@nnest/config-options';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -10,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get('JWT_SECRET', 'secret'),
+      secretOrKey: configService.get(ConfigurationsEnum.jwt.secret.key, ConfigurationsEnum.jwt.secret.default),
     });
   }
 

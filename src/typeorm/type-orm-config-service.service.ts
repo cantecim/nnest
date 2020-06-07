@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { PlatformTools } from 'typeorm/platform/PlatformTools';
+import { ConfigurationsEnum } from '@nnest/config-options';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -16,18 +17,18 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     this.logger.log('initializing typeorm configuration');
     let conf: TypeOrmModuleOptions = {
       type: this.configService.get(
-        'DATABASE_DRIVER',
-        'postgres',
+        ConfigurationsEnum.db.driver.key,
+        ConfigurationsEnum.db.driver.default,
       ) as any,
-      host: this.configService.get<string>('DATABASE_HOST'),
-      port: Number(this.configService.get('DATABASE_PORT')),
-      username: this.configService.get<string>('DATABASE_USERNAME'),
-      password: this.configService.get<string>('DATABASE_PASSWORD'),
-      database: this.configService.get<string>('DATABASE_NAME'),
-      migrationsRun: this.configService.get('DATABASE_MIGRATIONS_RUN') == 'true',
+      host: this.configService.get<string>(ConfigurationsEnum.db.host.key, ConfigurationsEnum.db.host.default),
+      port: Number(this.configService.get(ConfigurationsEnum.db.port.key, ConfigurationsEnum.db.port.default)),
+      username: this.configService.get<string>(ConfigurationsEnum.db.username.key, ConfigurationsEnum.db.username.default),
+      password: this.configService.get<string>(ConfigurationsEnum.db.password.key, ConfigurationsEnum.db.password.default),
+      database: this.configService.get<string>(ConfigurationsEnum.db.name.key, ConfigurationsEnum.db.name.default),
+      migrationsRun: this.configService.get(ConfigurationsEnum.db.migrationsRun.key, ConfigurationsEnum.db.migrationsRun.default) == 'true',
       entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       migrations: [`${__dirname}/../migrations/*.{ts,js}`],
-      logging: process.env.NODE_ENV !== 'production',
+      logging: process.env.NODE_ENV !== 'production'
     };
     const generalLog = (level = 'log') => (prefix: string, info: any) => {
       this.logger[level](info, prefix);
@@ -41,7 +42,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     this.logger.debug('overridden logging method of PlatformTools of typeorm');
 
     if (
-      (this.configService.get('SQLITE_IN_DEV') == 'true' &&
+      (this.configService.get(ConfigurationsEnum.db.sqliteInDev.key, ConfigurationsEnum.db.sqliteInDev.default) == 'true' &&
         process.env.NODE_ENV == 'development') ||
       process.env.NODE_ENV == 'test'
     ) {
@@ -50,6 +51,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       conf = Object.assign(conf, {
         type: 'sqlite',
         database: process.env.NODE_ENV == 'test' ? ':memory:' : 'db.sqlite3',
+        synchronize: true,
       });
     }
 
