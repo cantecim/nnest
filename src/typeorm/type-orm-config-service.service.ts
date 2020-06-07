@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { Logger as TypeOrmLogger } from 'typeorm';
 import { PlatformTools } from 'typeorm/platform/PlatformTools';
 
 @Injectable()
