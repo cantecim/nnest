@@ -12,8 +12,7 @@ export class UsersResolver {
   @UseGuards(GqlJwtAuthGuard)
   @Query(returns => User, { name: 'user' })
   async findOne(@Args('value') value: string, @Args('field', { type: () => String }) field: 'username' | 'email') {
-    const plainResult = classToPlain(await this.usersService.findOne(value, field));
-    return plainResult;
+    return classToPlain(await this.usersService.findOne(value, field));
   }
 
 }
