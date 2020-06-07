@@ -124,4 +124,6 @@ This method simply validates the given object and throws **EntityValidationExcep
 
 Our global **EntityValidationExceptionFilter** filter is configured to help you out here, it handles all the **EntityValidationException** for you.
 
+In most cases you do not need to call **entityValidateOrReject** because we have a hook in **BaseEntity** that calls the method automatically for you on **BeforeInsert** and **BeforeUpdate**, go remove the line in **UserService** and you will see it will work
+
 Also, there is a **safeValidateOrReject** helper in api module too. It does the same thing only difference is throw and **ValidationException** that derives from **HttpException**, so global exception filter is handling this exception too.
