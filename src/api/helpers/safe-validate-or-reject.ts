@@ -1,31 +1,31 @@
 import { ValidatorOptions, validate } from 'class-validator';
 import { ValidationException } from '../exceptions/validation-exception';
 
-export async function safeValidateOrReject(
-  object: Record<string, unknown>,
+export async function safeValidateOrReject<T>(
+  object: T,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
-export async function safeValidateOrReject(
+export async function safeValidateOrReject<T>(
   schemaName: string,
-  object: Record<string, unknown>,
+  object: T,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
 
-export async function safeValidateOrReject(
-  objectOrSchemaName: Record<string, unknown> | string,
-  objectOrValidationOptions: Record<string, unknown> | ValidatorOptions,
+export async function safeValidateOrReject<T>(
+  objectOrSchemaName: T | string,
+  objectOrValidationOptions: T | ValidatorOptions,
   maybeValidatorOptions?: ValidatorOptions,
 ): Promise<void> {
   let errors;
   if (maybeValidatorOptions) {
     errors = await validate(
       objectOrSchemaName as string,
-      objectOrValidationOptions as Record<string, unknown>,
+      objectOrValidationOptions as T,
       maybeValidatorOptions,
     );
   } else {
     errors = await validate(
-      objectOrSchemaName as Record<string, unknown>,
+      objectOrSchemaName as T,
       objectOrValidationOptions as ValidatorOptions,
     );
   }

@@ -1,27 +1,28 @@
 import { ValidatorOptions, validate } from 'class-validator';
 import { EntityValidationException } from '../exceptions/entity-validation-exception';
 
+type Class = { new(...args: any[]): any; };
 export const defaultValidatorOptions: ValidatorOptions = { validationError: { target: false, value: false } };
-export async function entityValidateOrReject(
-  object: Record<string, unknown>,
+export async function entityValidateOrReject<T>(
+  object: T,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
-export async function entityValidateOrReject(
+export async function entityValidateOrReject<T>(
   schemaName: string,
-  object: Record<string, unknown>,
+  object: T,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
 
-export async function entityValidateOrReject(
-  objectOrSchemaName: Record<string, unknown> | string,
-  objectOrValidationOptions: Record<string, unknown> | ValidatorOptions,
+export async function entityValidateOrReject<T>(
+  objectOrSchemaName: T | string,
+  objectOrValidationOptions: T | ValidatorOptions,
   maybeValidatorOptions?: ValidatorOptions,
 ): Promise<void> {
   let errors;
   if (maybeValidatorOptions) {
     errors = await validate(
       objectOrSchemaName as string,
-      objectOrValidationOptions as Record<string, unknown>,
+      objectOrValidationOptions as T,
       maybeValidatorOptions,
     );
   } else {
@@ -29,7 +30,7 @@ export async function entityValidateOrReject(
       objectOrValidationOptions = defaultValidatorOptions;
     }
     errors = await validate(
-      objectOrSchemaName as Record<string, unknown>,
+      objectOrSchemaName as T,
       objectOrValidationOptions as ValidatorOptions,
     );
   }
