@@ -20,5 +20,16 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': ['warn', {
+      allowArgumentsExplicitlyTypedAsAny: true
+    }],
+    // '@typescript-eslint/ban-types': ["error", {
+    //   types: {
+    //     'object': {
+    //       message: "Don't use 'object' as a type. Use Record<string, unknown> instead",
+    //       fixWith: "Record<string, unknown>"
+    //     }
+    //   }
+    // }]
   },
 };

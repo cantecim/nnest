@@ -13,6 +13,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     logger.setContext(this.constructor.name);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   createTypeOrmOptions(connectionName?: string): TypeOrmModuleOptions {
     this.logger.log('initializing typeorm configuration');
     let conf: TypeOrmModuleOptions = {

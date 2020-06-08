@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ValidationException extends HttpException {
   constructor(
-    objectOrError?: string | object | any,
+    objectOrError?: string | Record<string, unknown> | any,
     description = 'Validation Exception',
   ) {
     super(

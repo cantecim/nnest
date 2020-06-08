@@ -3,25 +3,25 @@ import { EntityValidationException } from '../exceptions/entity-validation-excep
 
 export const defaultValidatorOptions: ValidatorOptions = { validationError: { target: false, value: false } };
 export async function entityValidateOrReject(
-  object: Object,
+  object: Record<string, unknown>,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
 export async function entityValidateOrReject(
   schemaName: string,
-  object: Object,
+  object: Record<string, unknown>,
   validatorOptions?: ValidatorOptions,
 ): Promise<void>;
 
 export async function entityValidateOrReject(
-  objectOrSchemaName: object | string,
-  objectOrValidationOptions: object | ValidatorOptions,
+  objectOrSchemaName: Record<string, unknown> | string,
+  objectOrValidationOptions: Record<string, unknown> | ValidatorOptions,
   maybeValidatorOptions?: ValidatorOptions,
 ): Promise<void> {
   let errors;
   if (maybeValidatorOptions) {
     errors = await validate(
       objectOrSchemaName as string,
-      objectOrValidationOptions as object,
+      objectOrValidationOptions as Record<string, unknown>,
       maybeValidatorOptions,
     );
   } else {
@@ -29,7 +29,7 @@ export async function entityValidateOrReject(
       objectOrValidationOptions = defaultValidatorOptions;
     }
     errors = await validate(
-      objectOrSchemaName as object,
+      objectOrSchemaName as Record<string, unknown>,
       objectOrValidationOptions as ValidatorOptions,
     );
   }

@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtPayloadDto } from './dtos/jwt-payload-dto';
 import { ConfigurationsEnum } from '@nnest/config-options';
+import { RequestUserDto } from './dtos/request-user-dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayloadDto) {
+  async validate(payload: JwtPayloadDto): Promise<RequestUserDto>  {
     return { id: payload.sub, username: payload.username };
   }
 }

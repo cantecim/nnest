@@ -9,7 +9,7 @@ import { EntityValidationException } from './exceptions/entity-validation-except
 
 @Catch(EntityValidationException)
 export class EntityValidationExceptionFilter implements ExceptionFilter {
-  catch(exception: EntityValidationException, host: ArgumentsHost) {
+  catch(exception: EntityValidationException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 

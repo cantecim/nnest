@@ -3,7 +3,6 @@ import {
   UseGuards,
   Post,
   Request,
-  Get,
   Body,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth-guard';
@@ -12,7 +11,6 @@ import { RegisterDto } from './dtos/register-dto';
 import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
 import { LoginDto } from './dtos/login-dto';
 import { LoginResponseDto } from './dtos/login-response-dto';
-import { Args } from '@nestjs/graphql';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -29,7 +27,7 @@ export class AuthController {
     description: 'The login successful',
     type: LoginResponseDto,
   })
-  async login(@Request() req) {
+  async login(@Request() req: any): Promise<LoginResponseDto> {
     return this.authService.login(req.user);
   }
 
@@ -38,7 +36,7 @@ export class AuthController {
     description: 'The register successful',
     type: LoginResponseDto,
   })
-  async register(@Body() payload: RegisterDto) {
+  async register(@Body() payload: RegisterDto): Promise<LoginResponseDto> {
     return this.authService.register(payload);
   }
 
@@ -59,7 +57,7 @@ export class AuthController {
       },
     },
   })
-  async isEmailAvailable(@Body('email') email) {
+  async isEmailAvailable(@Body('email') email: string): Promise<Record<'result', boolean>> {
     return {
       result: await this.authService.isEmailAvailable(email),
     };
@@ -82,7 +80,7 @@ export class AuthController {
       },
     },
   })
-  async isUsernameAvailable(@Body('username') username) {
+  async isUsernameAvailable(@Body('username') username: string): Promise<Record<'result', boolean>> {
     return {
       result: await this.authService.isUsernameAvailable(username),
     };

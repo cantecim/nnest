@@ -1,6 +1,3 @@
-import { User } from "../models/user.entity";
-import { Length, IsString } from "class-validator";
+import { User } from '../models/user.entity';
 
-export class RegisterUserDto extends User {
-
-}
+export class RegisterUserDto extends User {}

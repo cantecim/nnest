@@ -12,7 +12,7 @@ import { Logger } from './logger.service';
 const defaultLogLevel = 'debug';
 const createConsoleTransport = (level: string): ConsoleTransportInstance =>
   new winston.transports.Console({
-    level: 'debug',
+    level,
     format: winston.format.combine(
       winston.format.timestamp(),
       nestWinstonModuleUtilities.format.nestLike(),
@@ -34,6 +34,7 @@ export const globalLogger = NestWinstonModule.createLogger(
   loggerOptions,
 ) as Logger;
 // And we override this method, if someone wants to create Logger we give our logger
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 NestWinstonModule.createLogger = (options?: WinstonModuleOptions) => {
   return globalLogger;
 };

@@ -1,5 +1,5 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectRepository, TypeOrmModule } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserEntityProperties } from './models/user.entity';
 import { Repository, FindConditions } from 'typeorm';
 import { plainToClass, classToPlain } from 'class-transformer';

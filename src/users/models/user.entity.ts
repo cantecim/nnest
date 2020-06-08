@@ -34,6 +34,7 @@ export class User extends BaseEntity {
 export type UserEntityPropertiesRequired = Pick<
   User,
   {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     [K in keyof User]: User[K] extends Function ? never : K;
   }[keyof User]
 >;
