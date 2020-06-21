@@ -18,7 +18,7 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<RequestUserDto> {
     const user = await this.usersService.findOne(email, 'email');
-    if (user && await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return plainToClass(RequestUserDto, result, {
@@ -29,21 +29,35 @@ export class AuthService {
   }
 
   async login(user: RequestUserDto): Promise<LoginResponseDto> {
-    const payload: JwtPayloadDto = { ...user, sub: user.id };
+    const payload: JwtPayloadDto = plainToClass(
+      JwtPayloadDto,
+      { ...user, sub: user.id },
+      {
+        excludeExtraneousValues: true,
+      },
+    );
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(classToPlain(payload)),
+      user,
     };
   }
 
   async register(user: RegisterDto): Promise<LoginResponseDto> {
     user.password = await AuthService.hashPassword(user.password);
     const savedUser: User = await this.usersService.register(user);
-    const payload: JwtPayloadDto = plainToClass(JwtPayloadDto, { ...savedUser, sub: savedUser.id }, {
-      excludeExtraneousValues: true
-    });
+    const payload: JwtPayloadDto = plainToClass(
+      JwtPayloadDto,
+      { ...savedUser, sub: savedUser.id },
+      {
+        excludeExtraneousValues: true,
+      },
+    );
     return {
-      access_token: this.jwtService.sign(classToPlain(payload))
-    }
+      access_token: this.jwtService.sign(classToPlain(payload)),
+      user: plainToClass(RequestUserDto, savedUser, {
+        excludeExtraneousValues: true,
+      }),
+    };
   }
 
   public static async hashPassword(password: string): Promise<string> {
@@ -51,11 +65,11 @@ export class AuthService {
     return bcrypt.hash(password, saltRounds);
   }
 
-  async isEmailAvailable(email: string) : Promise<boolean> {
+  async isEmailAvailable(email: string): Promise<boolean> {
     return this.usersService.isEmailAvailable(email);
   }
 
-  async isUsernameAvailable(username: string) : Promise<boolean> {
+  async isUsernameAvailable(username: string): Promise<boolean> {
     return this.usersService.isUsernameAvailable(username);
   }
 }

@@ -15,6 +15,7 @@ async function bootstrap() {
     logger: globalLogger,
   });
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  app.enableCors();
   app.use(app.get(ApiDataPropertyMiddleware).use);
   app.useGlobalPipes(new ValidationPipe({
     transform: true,

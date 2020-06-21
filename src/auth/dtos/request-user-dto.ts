@@ -12,4 +12,10 @@ export class RequestUserDto {
 
   @Expose()
   id: number;
+
+  @Expose()
+  email: string;
+
+  @Expose()
+  name: string;
 }

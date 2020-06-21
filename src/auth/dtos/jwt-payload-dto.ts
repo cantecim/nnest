@@ -1,7 +1,13 @@
 import { RequestUserDto } from './request-user-dto';
 import { Expose } from 'class-transformer';
 
-export class JwtPayloadDto extends RequestUserDto {
+export class JwtPayloadDto {
+  @Expose()
+  username: string;
+
+  @Expose()
+  id: number;
+
   @Expose()
   sub: number;
 }
