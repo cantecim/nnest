@@ -21,7 +21,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': ['warn', {
-      allowArgumentsExplicitlyTypedAsAny: true
+      allowArgumentsExplicitlyTypedAsAny: true,
     }],
     // '@typescript-eslint/ban-types': ["error", {
     //   types: {
