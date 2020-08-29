@@ -13,7 +13,7 @@ export class UsersService {
 
   private async save(user: UserEntityProperties): Promise<User> {
     const u = plainToClass(User, user);
-    // No need to validate here in thanks to BaseEntity hook,
+    // No need to validate here in thanks to BaseSchema hook,
     // This line is left because to show it in documentation
     await entityValidateOrReject(u);
     return await this.userRepository.save(u);
@@ -27,7 +27,7 @@ export class UsersService {
         resolve(plainToClass(User, classToPlain(result)));
       } catch (error) {
         // in order to not hang the request we have to handle rejection
-        // remember: if you create a promise be sure to fullfil or reject it finally...
+        // remember: if you create a promise be sure to fulfil or reject it finally...
         reject(error);
       }
     });

@@ -1,7 +1,7 @@
-import { BaseEntity } from './base-entity';
+import { BaseSchema } from './base.schema';
 
 describe('BaseEntity', () => {
   it('should be defined', () => {
-    expect(new BaseEntity()).toBeDefined();
+    expect(new BaseSchema()).toBeDefined();
   });
 });

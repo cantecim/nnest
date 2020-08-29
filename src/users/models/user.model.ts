@@ -1,33 +1,30 @@
 // TODO : database module and default base class
 
 import { Field } from "@nestjs/graphql";
-import { Column, Index } from "typeorm";
 import { IsEmail, IsString, Length, MinLength } from "class-validator";
 import { Exclude } from "class-transformer";
-import { prop } from "typegoose";
+import { BaseSchema } from "@nnest/typeorm/models/base.schema";
+import { prop } from "@typegoose/typegoose";
 
-export class UserModel {
+export class UserModel extends BaseSchema{
   @Field()
-  @Column()
   @Length(3, 20)
   @prop({required :true})
-  name: string;
+  name!: string;
 
   @Field()
-  @Index({ unique: true })
-  @Column()
   @Length(3, 15)
   @IsString()
-  username: string;
+  @prop({required :true})
+  username!: string;
 
   @Field()
-  @Index({ unique: true })
-  @Column()
   @IsEmail()
-  email: string;
+  @prop({required :true})
+  email!: string;
 
   @Exclude({ toPlainOnly: true })
-  @Column()
   @MinLength(8)
-  password: string;
+  @prop({required :true})
+  password!: string;
 }
