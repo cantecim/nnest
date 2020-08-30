@@ -11,14 +11,14 @@ export class RegisterDto {
   @ApiProperty({
     description: 'username',
   })
-  username: string;
+  username!: string;
 
   @Field()
   @IsEmail()
   @ApiProperty({
     description: 'email',
   })
-  email: string;
+  email!: string;
 
   @Field()
   @Exclude({ toPlainOnly: true })
@@ -26,12 +26,12 @@ export class RegisterDto {
   @ApiProperty({
     description: 'password',
   })
-  password: string;
+  password!: string;
 
   @Field()
   @Length(3, 20)
   @ApiProperty({
     description: 'name',
   })
-  name: string;
+  name!: string;
 }

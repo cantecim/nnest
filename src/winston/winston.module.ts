@@ -18,7 +18,7 @@ const createConsoleTransport = (level: string): ConsoleTransportInstance =>
       nestWinstonModuleUtilities.format.nestLike(),
     ),
   });
-const envLogLevel = process.env.LOG_LEVEL && defaultLogLevel;
+const envLogLevel = process.env.LOG_LEVEL ?? defaultLogLevel;
 
 const loggerOptions: WinstonModuleOptions = {
   level: envLogLevel,
@@ -52,8 +52,8 @@ NestWinstonModule.createLogger = (options?: WinstonModuleOptions) => {
           'winston',
         );
         return Object.assign({}, loggerOptions, {
-          level: config.get('LOG_LEVEL'),
-          transports: [createConsoleTransport(config.get('LOG_LEVEL'))],
+          level: config.get<string>('LOG_LEVEL', 'info'),
+          transports: [createConsoleTransport(config.get<string>('LOG_LEVEL', 'info'))],
         } as WinstonModuleOptions);
       },
       inject: [ConfigService],
@@ -63,7 +63,7 @@ NestWinstonModule.createLogger = (options?: WinstonModuleOptions) => {
     {
       provide: Logger,
       useFactory: () => {
-        globalLogger.setContext(undefined);
+        globalLogger.setContext('');
         return globalLogger;
       },
     },

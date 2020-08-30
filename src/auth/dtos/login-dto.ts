@@ -4,9 +4,9 @@ export class LoginDto {
   @ApiProperty({
     description: 'User email',
   })
-  email: string;
+  email!: string;
   @ApiProperty({
     description: 'User password',
   })
-  password: string;
+  password!: string;
 }

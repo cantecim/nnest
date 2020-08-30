@@ -23,14 +23,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts",
-    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts migration:generate -n",
-    "migration:show": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts migration:show",
-    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts migration:run",
-    "migration:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts migration:revert",
-    "schema:log": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts schema:log",
-    "schema:sync": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -f src/typeorm/bootstrap.ts schema:sync"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -42,7 +35,6 @@
     "@nestjs/passport": "^7.0.0",
     "@nestjs/platform-express": "^7.1.3",
     "@nestjs/swagger": "^4.5.10",
-    "@nestjs/typeorm": "^7.1.0",
     "@typegoose/typegoose": "^7.3.4",
     "apollo-server-express": "^2.14.2",
     "bcrypt": "^5.0.0",
@@ -63,7 +55,6 @@
     "rxjs": "^6.5.4",
     "sqlite3": "^4.2.0",
     "swagger-ui-express": "^4.1.4",
-    "typeorm": "^0.2.25",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -112,7 +103,6 @@
     "@root": "./src",
     "@nnest/api": "src/api",
     "@nnest/auth": "src/auth",
-    "@nnest/typeorm": "src/typeorm",
     "@nnest/users": "src/users",
     "@nnest/winston": "src/winston"
   }

@@ -1,3 +1,5 @@
-import { User } from '../models/user.entity';
+import { UserDto } from "./user.dto";
 
-export class RegisterUserDto extends User {}
+export class RegisterUserDto extends UserDto {
+  _id!: string;
+}

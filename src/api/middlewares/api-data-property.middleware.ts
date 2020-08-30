@@ -5,7 +5,7 @@ import { Response, Request } from 'express';
 export class ApiDataPropertyMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void): any {
     const superJson = res.json;
-    res.json = function(body: any, ...others) {
+    res.json = function(body: any,) {
       if (
         body instanceof Object &&
         !(body as Record<string, any>).hasOwnProperty('data')
@@ -14,7 +14,7 @@ export class ApiDataPropertyMiddleware implements NestMiddleware {
           data: body,
         };
       }
-      return superJson.apply(this, [body, ...others]);
+      return superJson.apply(res, [body]);
     } as any;
     next();
   }

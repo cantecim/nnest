@@ -4,7 +4,8 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register-dto';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-@Resolver(of => LoginResponseDto)
+// TODO : bu resolverlar full bozuldu
+// @Resolver(of => LoginResponseDto)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
@@ -13,9 +14,14 @@ export class AuthResolver {
   async login(
     @Args('email') email: string,
     @Args('password') password: string,
-  ): Promise<LoginResponseDto> {
+  ): Promise<LoginResponseDto | null> {
     const reqUserDto = await this.authService.validateUser(email, password);
-    return this.authService.login(reqUserDto);
+    if(reqUserDto) {
+      return this.authService.login(reqUserDto);
+    } else {
+      // TODO : burada exception fırlatmalı
+      return null;
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

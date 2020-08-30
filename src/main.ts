@@ -10,8 +10,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ApiDataPropertyMiddleware } from './api/middlewares/api-data-property.middleware';
 import { AppModule } from './app.module';
-import { EntityValidationExceptionFilter } from './typeorm/entity-validation-exception-filter';
 import { globalLogger } from './winston/winston.module';
+import { SchemaValidationExceptionFilter } from "@nnest/mongoose/filters/schema-validation-exception.filter";
+import { SchemaDuplicateRecordExceptionFilter } from "@nnest/mongoose/filters/schema-duplicate-record-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -30,9 +31,11 @@ async function bootstrap() {
         target: false,
         value: false,
       },
+      forbidNonWhitelisted: true,
     }),
   );
-  app.useGlobalFilters(new EntityValidationExceptionFilter());
+  app.useGlobalFilters(new SchemaValidationExceptionFilter());
+  app.useGlobalFilters(new SchemaDuplicateRecordExceptionFilter());
 
   const options = new DocumentBuilder()
     .setTitle('REST API Documentations')
@@ -44,7 +47,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT ?? 3000);
 }
 
 bootstrap();

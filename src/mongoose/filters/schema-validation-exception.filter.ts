@@ -5,11 +5,11 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { EntityValidationException } from './exceptions/entity-validation-exception';
+import { SchemaValidationException } from '../exceptions/schema-validation.exception';
 
-@Catch(EntityValidationException)
-export class EntityValidationExceptionFilter implements ExceptionFilter {
-  catch(exception: EntityValidationException, host: ArgumentsHost): void {
+@Catch(SchemaValidationException)
+export class SchemaValidationExceptionFilter implements ExceptionFilter {
+  catch(exception: SchemaValidationException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 

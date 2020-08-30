@@ -7,7 +7,8 @@ import { JwtPayloadDto } from './dtos/jwt-payload-dto';
 import { LoginResponseDto } from './dtos/login-response-dto';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dtos/register-dto';
-import { User } from '@nnest/users/models/user.entity';
+import { UserDto } from "@nnest/users/dtos/user.dto";
+import { RegisterUserDto } from "@nnest/users/dtos/register-user-dto";
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<RequestUserDto> {
+  async validateUser(email: string, password: string): Promise<RequestUserDto | null> {
     const user = await this.usersService.findOne(email, 'email');
     if (user && (await bcrypt.compare(password, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -44,10 +45,10 @@ export class AuthService {
 
   async register(user: RegisterDto): Promise<LoginResponseDto> {
     user.password = await AuthService.hashPassword(user.password);
-    const savedUser: User = await this.usersService.register(user);
+    const savedUser: RegisterUserDto = await this.usersService.register(user);
     const payload: JwtPayloadDto = plainToClass(
       JwtPayloadDto,
-      { ...savedUser, sub: savedUser.id },
+      { ...savedUser, sub: savedUser._id },
       {
         excludeExtraneousValues: true,
       },

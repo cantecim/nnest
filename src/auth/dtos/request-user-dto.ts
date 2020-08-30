@@ -8,14 +8,14 @@ import { Expose } from 'class-transformer';
 
 export class RequestUserDto {
   @Expose()
-  username: string;
+  username!: string;
 
   @Expose()
-  id: number;
+  id!: number;
 
   @Expose()
-  email: string;
+  email!: string;
 
   @Expose()
-  name: string;
+  name!: string;
 }

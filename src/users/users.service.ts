@@ -1,30 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserEntityProperties } from './models/user.entity';
-import { Repository, FindConditions } from 'typeorm';
 import { plainToClass, classToPlain } from 'class-transformer';
-import { entityValidateOrReject } from '@nnest/typeorm/helpers/entity-validate-or-reject';
+import { UserDto } from "@nnest/users/dtos/user.dto";
+import { InjectModel } from "nestjs-typegoose";
+import { UserSchema } from "@nnest/users/schema/user.schema";
+import { DocumentType, ReturnModelType } from "@typegoose/typegoose";
+import { schemaValidateOrReject } from "@nnest/mongoose/helpers/schema-validate-or-reject";
+import { RegisterUserDto } from "@nnest/users/dtos/register-user-dto";
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectModel(UserSchema)
+    private readonly userModel: ReturnModelType<typeof UserSchema>,
   ) {}
 
-  private async save(user: UserEntityProperties): Promise<User> {
-    const u = plainToClass(User, user);
+  private async save(user: UserDto): Promise<DocumentType<UserSchema>> {
+    const u = plainToClass(UserDto, user);
     // No need to validate here in thanks to BaseSchema hook,
     // This line is left because to show it in documentation
-    await entityValidateOrReject(u);
-    return await this.userRepository.save(u);
+    // Note : We are creating a Model instance here to have .toJSON method in prototype
+    await schemaValidateOrReject(UserSchema, new this.userModel(u));
+    const userDocument: DocumentType<UserSchema> = await this.userModel.create(
+      u,
+    );
+    return userDocument.toJSON();
   }
 
-  async register(user: UserEntityProperties): Promise<User> {
-    return new Promise<User>(async (resolve, reject) => {
+  async register(user: UserDto): Promise<RegisterUserDto> {
+    return new Promise<RegisterUserDto>(async (resolve, reject) => {
       try {
-        const result: User = await this.save(user);
+        const result: UserDto = await this.save(user);
         // plainToClass and then classToPlain, simply we are filtering excluded fields
-        resolve(plainToClass(User, classToPlain(result)));
+        resolve(plainToClass(RegisterUserDto, classToPlain(result)));
       } catch (error) {
         // in order to not hang the request we have to handle rejection
         // remember: if you create a promise be sure to fulfil or reject it finally...
@@ -36,21 +43,28 @@ export class UsersService {
   async findOne(
     fieldValue: string,
     fieldName?: 'username' | 'email',
-  ): Promise<User | undefined> {
-    return this.userRepository.findOne({
+  ): Promise<UserDto | null> {
+    const userDocument: DocumentType<
+      UserSchema
+    > | null = await this.userModel.findOne({
       [fieldName ?? 'username']: fieldValue,
-    } as FindConditions<User>);
+    });
+    return userDocument ? plainToClass(UserDto, userDocument.toJSON()) : null;
   }
 
-  async isEmailAvailable(email: string) : Promise<boolean> {
-    return await this.userRepository.count({
-      email
-    }) == 0
+  async isEmailAvailable(email: string): Promise<boolean> {
+    return (
+      (await this.userModel.count({
+        email,
+      })) == 0
+    );
   }
 
-  async isUsernameAvailable(username: string) : Promise<boolean> {
-    return await this.userRepository.count({
-      username
-    }) == 0
+  async isUsernameAvailable(username: string): Promise<boolean> {
+    return (
+      (await this.userModel.count({
+        username,
+      })) == 0
+    );
   }
 }

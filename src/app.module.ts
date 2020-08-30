@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
-import { TypeOrmModule } from './typeorm/typeorm.module';
 import { WinstonModule } from './winston/winston.module';
 import { ApiModule } from './api/api.module';
 import { AuthModule } from './auth/auth.module';
 import configOptions from './config-options';
 import { join } from 'path';
+import { MongooseModule } from "@nnest/mongoose/mongoose.module";
 
 @Module({
   imports: [
@@ -20,7 +20,8 @@ import { join } from 'path';
       playground: true,
     }),
     UsersModule,
-    TypeOrmModule,
+    //TypeOrmModule,
+    MongooseModule,
     WinstonModule,
     AuthModule
   ]
