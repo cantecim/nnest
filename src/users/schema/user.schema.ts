@@ -2,7 +2,7 @@
 
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
-import { index, pre, prop } from '@typegoose/typegoose';
+import { index, modelOptions, pre, prop } from "@typegoose/typegoose";
 import { BaseSchema } from '@nnest/mongoose/schemas/base.schema';
 import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-or-reject';
 
@@ -11,6 +11,11 @@ import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-
 })
 @index({ username: 1 }, { unique: true })
 @index({ email: 1 }, { unique: true })
+@modelOptions({
+  schemaOptions: {
+    collection: 'users'
+  }
+})
 export class UserSchema extends BaseSchema {
   @Length(3, 20)
   @prop({ required: true })
