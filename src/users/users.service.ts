@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { plainToClass, classToPlain } from 'class-transformer';
-import { UserDto } from "@nnest/users/dtos/user.dto";
-import { InjectModel } from "nestjs-typegoose";
-import { UserSchema } from "@nnest/users/schema/user.schema";
-import { DocumentType, ReturnModelType } from "@typegoose/typegoose";
-import { schemaValidateOrReject } from "@nnest/mongoose/helpers/schema-validate-or-reject";
-import { RegisterUserDto } from "@nnest/users/dtos/register-user-dto";
+import { classToPlain, plainToClass } from 'class-transformer';
+import { UserDto } from '@nnest/users/dtos/user.dto';
+import { InjectModel } from 'nestjs-typegoose';
+import { UserSchema } from '@nnest/users/schema/user.schema';
+import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
+import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-or-reject';
+import { RegisterUserDto } from '@nnest/users/dtos/register-user-dto';
 
 @Injectable()
 export class UsersService {
@@ -20,18 +20,20 @@ export class UsersService {
     // This line is left because to show it in documentation
     // Note : We are creating a Model instance here to have .toJSON method in prototype
     await schemaValidateOrReject(UserSchema, new this.userModel(u));
-    const userDocument: DocumentType<UserSchema> = await this.userModel.create(
-      u,
-    );
-    return userDocument.toJSON();
+    return await this.userModel.create(u);
   }
 
   async register(user: UserDto): Promise<RegisterUserDto> {
     return new Promise<RegisterUserDto>(async (resolve, reject) => {
       try {
-        const result: UserDto = await this.save(user);
+        const result: DocumentType<UserSchema> = await this.save(user);
         // plainToClass and then classToPlain, simply we are filtering excluded fields
-        resolve(plainToClass(RegisterUserDto, classToPlain(result)));
+        resolve(plainToClass(RegisterUserDto, result.toJSON({
+          transform: ((doc, ret, options) => {
+            ret._id = ret._id.toString();
+            return ret;
+          })
+        })));
       } catch (error) {
         // in order to not hang the request we have to handle rejection
         // remember: if you create a promise be sure to fulfil or reject it finally...
@@ -43,13 +45,13 @@ export class UsersService {
   async findOne(
     fieldValue: string,
     fieldName?: 'username' | 'email',
-  ): Promise<UserDto | null> {
+  ): Promise<DocumentType<UserSchema> | null> {
     const userDocument: DocumentType<
       UserSchema
     > | null = await this.userModel.findOne({
       [fieldName ?? 'username']: fieldValue,
     });
-    return userDocument ? plainToClass(UserDto, userDocument.toJSON()) : null;
+    return userDocument ? userDocument.toJSON() : null;
   }
 
   async isEmailAvailable(email: string): Promise<boolean> {

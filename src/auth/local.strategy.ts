@@ -4,6 +4,8 @@ import { UnauthorizedException, Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RequestUserDto } from './dtos/request-user-dto';
 
+// Keep in mine, passport strategies registered with default name
+// However, you can supply custom name as second parameter of PassportStrategy
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {

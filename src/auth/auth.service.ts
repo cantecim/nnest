@@ -7,8 +7,9 @@ import { JwtPayloadDto } from './dtos/jwt-payload-dto';
 import { LoginResponseDto } from './dtos/login-response-dto';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dtos/register-dto';
+import { RegisterUserDto } from '@nnest/users/dtos/register-user-dto';
 import { UserDto } from "@nnest/users/dtos/user.dto";
-import { RegisterUserDto } from "@nnest/users/dtos/register-user-dto";
+import { SchemaTypes } from "mongoose";
 
 @Injectable()
 export class AuthService {
@@ -17,14 +18,22 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<RequestUserDto | null> {
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<RequestUserDto | null> {
     const user = await this.usersService.findOne(email, 'email');
     if (user && (await bcrypt.compare(password, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-      return plainToClass(RequestUserDto, result, {
+      const {
+        password,
+        ...result
+      }: { password: string, _id: string, name: string, username: string, email: string } = user;
+      const reqUser = plainToClass(RequestUserDto, result, {
         excludeExtraneousValues: true,
       });
+      reqUser.id = result._id.toString();
+      return reqUser;
     }
     return null;
   }
@@ -48,7 +57,7 @@ export class AuthService {
     const savedUser: RegisterUserDto = await this.usersService.register(user);
     const payload: JwtPayloadDto = plainToClass(
       JwtPayloadDto,
-      { ...savedUser, sub: savedUser._id },
+      { ...savedUser, id: savedUser._id, sub: savedUser._id },
       {
         excludeExtraneousValues: true,
       },

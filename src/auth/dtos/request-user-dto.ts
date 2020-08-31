@@ -11,7 +11,7 @@ export class RequestUserDto {
   username!: string;
 
   @Expose()
-  id!: number;
+  id!: string;
 
   @Expose()
   email!: string;

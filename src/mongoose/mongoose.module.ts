@@ -5,8 +5,11 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import mongoose from "mongoose";
 import { setLogLevel, LogLevels } from "@typegoose/typegoose";
 
+// Some mongoose global configurations
+mongoose.SchemaTypes.ObjectId.get((v: mongoose.Types.ObjectId) => v?.toString());
+
 // Set mongoose debug
-mongoose.set("debug", true);
+mongoose.set('debug', true);
 
 // Set typegoose debug
 setLogLevel(LogLevels.DEBUG);
