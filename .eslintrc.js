@@ -23,6 +23,9 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': ['warn', {
       allowArgumentsExplicitlyTypedAsAny: true,
     }],
+    "import/no-unresolved": [
+      "error"
+    ],
     // '@typescript-eslint/ban-types': ["error", {
     //   types: {
     //     'object': {
