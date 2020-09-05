@@ -17,6 +17,12 @@
     "incremental": true,
     "esModuleInterop": true,
     "paths": {
+      "@nnest/lib": [
+        "lib"
+      ],
+      "@nnest/lib/*": [
+        "lib/*"
+      ],
       "@nnest/*": [
         "src/*"
       ]

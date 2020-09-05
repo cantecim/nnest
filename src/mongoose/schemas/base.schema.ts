@@ -11,7 +11,8 @@ type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, 
   isAbstract: true,
 })
 @pre<BaseSchema>('save', async function () {
-  await schemaValidateOrReject(UserSchema, this);
+  // this.constructor points to late class
+  await schemaValidateOrReject(this.constructor, this);
 })
 @post<BaseSchema>('save', function (
   error: MongooseError,

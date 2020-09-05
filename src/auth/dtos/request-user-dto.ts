@@ -1,21 +1,21 @@
 import { Expose } from 'class-transformer';
-// import { UserEntityPropertiesRequired } from 'src/users/models/user.entity';
+import { Field, ObjectType } from "@nestjs/graphql";
 
-// export type RequestUserDto = Pick<UserEntityPropertiesRequired, Extract<keyof UserEntityPropertiesRequired, keyof {
-//   username: string;
-//   id: number;
-// }>>;
-
+@ObjectType()
 export class RequestUserDto {
   @Expose()
+  @Field()
   username!: string;
 
   @Expose()
+  @Field()
   id!: string;
 
   @Expose()
+  @Field()
   email!: string;
 
   @Expose()
+  @Field()
   name!: string;
 }

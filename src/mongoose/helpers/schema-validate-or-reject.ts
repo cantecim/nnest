@@ -4,6 +4,7 @@ import { plainToClass } from "class-transformer";
 import { DocumentType } from "@typegoose/typegoose";
 import { SchemaType } from "mongoose";
 import { ClassType } from "class-transformer/ClassTransformer";
+import { ClassTransformOptions } from "class-transformer/ClassTransformOptions";
 
 type Class = { new(...args: any[]): any; };
 export const defaultValidatorOptions: ValidatorOptions = { validationError: { target: false, value: false } };
@@ -26,11 +27,16 @@ export async function schemaValidateOrReject<T>(
   maybeValidatorOptions?: ValidatorOptions,
 ): Promise<void> {
   let errors;
+  // Just to be sure to not exclude extraneous values
+  // If someone applied the class transformer patch, it will be true by default.
+  const ptcOptions: ClassTransformOptions = {
+    excludeExtraneousValues: false
+  };
   if (maybeValidatorOptions) {
     // mongooseSchemaOrSchemaName = schemaName, objectOrMongooseSchema = mongooseSchema, ValidatorOptionsOrObject = object
     errors = await validate(
       mongooseSchemaOrSchemaName as string,
-      plainToClass(objectOrMongooseSchema, (ValidatorOptionsOrObject as DocumentType<any>).toJSON()),
+      plainToClass(objectOrMongooseSchema, (ValidatorOptionsOrObject as DocumentType<any>).toJSON(), ptcOptions),
       maybeValidatorOptions,
     );
   } else {
@@ -42,6 +48,7 @@ export async function schemaValidateOrReject<T>(
       plainToClass(
         mongooseSchemaOrSchemaName as unknown as ClassType<SchemaType>,
         (objectOrMongooseSchema as DocumentType<any>).toJSON(),
+        ptcOptions
       ),
       ValidatorOptionsOrObject as ValidatorOptions,
     );

@@ -20,7 +20,6 @@ import { MongooseModule } from "@nnest/mongoose/mongoose.module";
       playground: true,
     }),
     UsersModule,
-    //TypeOrmModule,
     MongooseModule,
     WinstonModule,
     AuthModule

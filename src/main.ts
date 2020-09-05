@@ -1,4 +1,6 @@
 import 'module-alias/register';
+import '@nnest/lib/patches/class-transformer.patch';
+
 import {
   BadRequestException,
   ValidationError,
@@ -8,11 +10,11 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { ApiDataPropertyMiddleware } from './api/middlewares/api-data-property.middleware';
 import { AppModule } from './app.module';
 import { globalLogger } from './winston/winston.module';
-import { SchemaValidationExceptionFilter } from "@nnest/mongoose/filters/schema-validation-exception.filter";
-import { SchemaDuplicateRecordExceptionFilter } from "@nnest/mongoose/filters/schema-duplicate-record-exception.filter";
+import { SchemaValidationExceptionFilter } from '@nnest/mongoose/filters/schema-validation-exception.filter';
+import { SchemaDuplicateRecordExceptionFilter } from '@nnest/mongoose/filters/schema-duplicate-record-exception.filter';
+import { ResponseWrapperInterceptor } from '@nnest/api/interceptors/response-wrapper.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -20,7 +22,7 @@ async function bootstrap() {
   });
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.enableCors();
-  app.use(app.get(ApiDataPropertyMiddleware).use);
+  app.useGlobalInterceptors(new ResponseWrapperInterceptor());
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

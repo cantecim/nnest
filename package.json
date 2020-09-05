@@ -104,6 +104,7 @@
     "@nnest/api": "src/api",
     "@nnest/auth": "src/auth",
     "@nnest/users": "src/users",
-    "@nnest/winston": "src/winston"
+    "@nnest/winston": "src/winston",
+    "@nnest/lib": "lib"
   }
 }

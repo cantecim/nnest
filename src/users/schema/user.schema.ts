@@ -1,5 +1,3 @@
-// TODO : database module and default base class
-
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { index, modelOptions, pre, prop } from "@typegoose/typegoose";

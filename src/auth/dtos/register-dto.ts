@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from "class-transformer";
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Field, ArgsType } from '@nestjs/graphql';
@@ -11,6 +11,7 @@ export class RegisterDto {
   @ApiProperty({
     description: 'username',
   })
+  @Expose()
   username!: string;
 
   @Field()
@@ -18,6 +19,7 @@ export class RegisterDto {
   @ApiProperty({
     description: 'email',
   })
+  @Expose()
   email!: string;
 
   @Field()
@@ -26,6 +28,7 @@ export class RegisterDto {
   @ApiProperty({
     description: 'password',
   })
+  @Expose()
   password!: string;
 
   @Field()
@@ -33,5 +36,6 @@ export class RegisterDto {
   @ApiProperty({
     description: 'name',
   })
+  @Expose()
   name!: string;
 }

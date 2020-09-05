@@ -10,7 +10,7 @@ export class LoginResponseDto {
   @ApiProperty()
   access_token!: string;
 
-  // @Field()
+  @Field()
   @Expose()
   @ApiProperty()
   user!: RequestUserDto

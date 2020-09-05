@@ -27,7 +27,9 @@ export class UsersService {
     return new Promise<RegisterUserDto>(async (resolve, reject) => {
       try {
         const result: DocumentType<UserSchema> = await this.save(user);
-        // plainToClass and then classToPlain, simply we are filtering excluded fields
+        // convert document to pojo and then plainToClass
+        // be aware that toJSON is not converting ObjectID to string
+        // and we apply the below transform function to make conversion
         resolve(plainToClass(RegisterUserDto, result.toJSON({
           transform: ((doc, ret, options) => {
             ret._id = ret._id.toString();
