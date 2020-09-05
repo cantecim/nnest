@@ -95,7 +95,8 @@ So this means to you that you need to be a little extra carefull about your dtos
 ## How to use mongoose? is there any quirks?
 
 ### Automatic Document validation support
-Be sure to extend you schemas from BaseSchema inside @nnest/mongoose module
+Be sure to extend you schemas from **BaseSchema** inside @nnest/mongoose module  
+otherwise this feature won't work, as we build that on the **BaseSchema**
 
 ## Exception handling and validations
 
