@@ -13,20 +13,29 @@
     "npm": "please-use-yarn"
   },
   "scripts": {
+    "prebuild": "yarn run build:libs && yarn run build:modules",
+    "postinstall": "node ./scripts/linkPackages.js",
     "lerna:bootstrap": "lerna bootstrap",
-    "build": "lerna run --parallel build",
+    "build": "yarn run build:apps",
     "build:apps": "lerna run --scope @nnest/core --parallel build",
-    "build:libs": "lerna run --scope @nnest/{'helpers,patches'} --parallel build",
-    "build:modules": "lerna run --scope @nnest/{'mongoose,winston,api,auth'} --parallel build"
+    "build:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel build",
+    "build:modules": "lerna run --scope @nnest/mongoose --scope @nnest/winston --scope @nnest/auth --scope @nnest/users --scope @nnest/api build",
+    "clean": "lerna run --parallel clean",
+    "clean:apps": "lerna run --scope @nnest/core --parallel build",
+    "clean:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel clean",
+    "clean:modules": "lerna run --scope @nnest/{'mongoose,winston,auth,users,api'} --parallel clean"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.2.0",
     "@typescript-eslint/parser": "^3.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-import": "^2.21.1",
-    "prettier": "2.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "fs-extra": "^9.0.1",
+    "get-yarn-workspaces": "^1.0.2",
     "lerna": "^3.22.1",
+    "lodash.get": "^4.4.2",
+    "prettier": "2.1.1",
     "typescript": "^3.9.5"
   },
   "workspaces": [

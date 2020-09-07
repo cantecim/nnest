@@ -5,7 +5,7 @@ import {
   Request,
   Body,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './guards/local-auth-guard';
+import { LocalAuthGuard } from '@nnest/guards/local-auth-guard';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register-dto';
 import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';

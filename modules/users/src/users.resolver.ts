@@ -1,7 +1,7 @@
 import { Resolver, Args, Query } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
-import { GqlJwtAuthGuard } from '../auth/guards/gql-jwt-auth-guard';
+import { GqlJwtAuthGuard } from '@nnest/guards/gql-jwt-auth-guard';
 import { UserDto } from './dtos/user.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

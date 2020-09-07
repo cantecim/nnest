@@ -1,6 +1,6 @@
 {
   "name": "@nnest/helpers",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "license": "MIT",
   "engines": {
@@ -11,6 +11,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "directory": "dist"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
@@ -19,6 +22,7 @@
     "lint": "eslint \"{src,test}/**/*.ts\" --fix"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

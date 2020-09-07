@@ -8,8 +8,6 @@ import { LoginResponseDto } from './dtos/login-response-dto';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dtos/register-dto';
 import { RegisterUserDto } from '@nnest/users/dtos/register-user-dto';
-import { UserDto } from '@nnest/users/dtos/user.dto';
-import { SchemaTypes } from 'mongoose';
 
 @Injectable()
 export class AuthService {

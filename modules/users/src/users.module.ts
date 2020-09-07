@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { WinstonModule } from 'apps/core/src/winston/winston.module';
+import { WinstonModule } from '@nnest/winston/winston.module';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { PassportModule } from '@nestjs/passport';

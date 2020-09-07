@@ -4,7 +4,7 @@ import { WinstonModule } from 'nest-winston';
 import { TypegooseModule } from 'nestjs-typegoose';
 import mongoose from "mongoose";
 import { setLogLevel, LogLevels } from "@typegoose/typegoose";
-import { strToBoolean } from "@nnest/helpers/dist/language-tools";
+import { strToBoolean } from "@nnest/helpers/language-tools";
 
 // Some mongoose global configurations
 // mongoose.SchemaTypes.ObjectId.get((v: mongoose.Types.ObjectId) => v?.toString());

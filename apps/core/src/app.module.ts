@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
-import { WinstonModule } from './winston/winston.module';
-import { ApiModule } from './api/api.module';
-import { AuthModule } from './auth/auth.module';
-import configOptions from './config-options';
+import { UsersModule } from '@nnest/users/users.module';
+import { WinstonModule } from '@nnest/winston/winston.module';
+import { ApiModule } from '@nnest/api/api.module';
+import { AuthModule } from '@nnest/auth/auth.module';
+import configOptions from '@nnest/helpers/config-options';
 import { join } from 'path';
 import { MongooseModule } from "@nnest/mongoose/mongoose.module";
 

@@ -8,6 +8,7 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
     'prettier',
     'prettier/@typescript-eslint',
   ],
@@ -23,9 +24,12 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': ['warn', {
       allowArgumentsExplicitlyTypedAsAny: true,
     }],
-    "import/no-unresolved": [
-      "error"
-    ],
+    "import/no-unresolved": ['error', {
+      ignore: [
+        "@nnest/*"
+      ]
+    }],
+    "import/no-extraneous-dependencies": ["error", {devDependencies: true}]
     // '@typescript-eslint/ban-types': ["error", {
     //   types: {
     //     'object': {
@@ -34,5 +38,12 @@ module.exports = {
     //     }
     //   }
     // }]
+  },
+  settings: {
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".ts"],
+      },
+    },
   },
 };

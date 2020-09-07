@@ -1,5 +1,4 @@
-import 'module-alias/register';
-import '@nnest/lib/patches/class-transformer.patch';
+import '@nnest/patches/class-transformer.patch';
 
 import {
   BadRequestException,
@@ -11,10 +10,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
-import { globalLogger } from './winston/winston.module';
-import { SchemaValidationExceptionFilter } from './mongoose/filters/schema-validation-exception.filter';
-import { SchemaDuplicateRecordExceptionFilter } from './mongoose/filters/schema-duplicate-record-exception.filter';
-import { ResponseWrapperInterceptor } from './api/interceptors/response-wrapper.interceptor';
+import { globalLogger } from '@nnest/winston/winston.module';
+import { SchemaValidationExceptionFilter } from '@nnest/mongoose/filters/schema-validation-exception.filter';
+import { SchemaDuplicateRecordExceptionFilter } from '@nnest/mongoose/filters/schema-duplicate-record-exception.filter';
+import { ResponseWrapperInterceptor } from '@nnest/api/interceptors/response-wrapper.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

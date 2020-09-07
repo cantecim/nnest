@@ -78,6 +78,22 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 +-- typings // Modules or global type definitions
 ```
 
+### Some tips for your packages
+You can use publishConfig.directory to make distribution folder available as just like published package  
+  
+We have setup everything for you, a postinstall script takes care of linking process in the root package.json
+
+### Known-issues about packages
+
+Unfortunately, packages under **modules/*** might depend each other  
+build:modules script should have correct order to build successfully  
+_Actually, currently we don't have circular dependency in modules_ 
+  
+packages under **libs/*** doesn't depend each other, keep it that way  
+  
+And, of course, packages under **apps/*** must not depend each other.
+They should depend on **libs** and **modules**
+
 # How-tos
 
 ## How to inject logger?
