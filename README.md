@@ -53,7 +53,7 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
     
 # Folder structure
 
-```js
+```ts
 +-- scripts // development scripts
 +-- apps // application packages
 |   +-- <app> // typical nestjs app folder structure
@@ -98,7 +98,7 @@ They should depend on **libs** and **modules**
 
 You need to use WinstonModule, WinstonModule is a global module, you don't need to import it, though, I like importing, then you can use DI with Logger class from @nestjs/common
 
-```jsx
+```typescript
 import { Logger } from '@nestjs/common';
 
 @Injectable()

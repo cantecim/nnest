@@ -10,6 +10,7 @@
     "directory": "dist"
   },
   "scripts": {
+    "prebuild": "npm run clean",
     "clean": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
     "watch": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",

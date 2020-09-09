@@ -16,6 +16,7 @@
     "directory": "dist"
   },
   "scripts": {
+    "prebuild": "npm run clean",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "nest build",
