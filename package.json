@@ -49,7 +49,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-push": "yarn run lint"
+      "pre-push": "yarn run lint:fix"
     }
   }
 }

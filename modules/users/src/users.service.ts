@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { UserDto } from './dtos/user.dto';
 import { InjectModel } from 'nestjs-typegoose';
 import { UserSchema } from './schemas/user.schema';
@@ -31,7 +31,7 @@ export class UsersService {
         // be aware that toJSON is not converting ObjectID to string
         // and we apply the below transform function to make conversion
         resolve(plainToClass(RegisterUserDto, result.toJSON({
-          transform: ((doc, ret, options) => {
+          transform: ((doc, ret) => {
             ret._id = ret._id.toString();
             return ret;
           })
