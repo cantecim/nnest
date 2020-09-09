@@ -1,0 +1,27 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserDto {
+  name: String!
+  username: String!
+  email: String!
+}
+
+type RequestUserDto {
+  username: String!
+  id: String!
+  email: String!
+  name: String!
+}
+
+type LoginResponseDto {
+  access_token: String!
+  user: RequestUserDto!
+}
+
+type Query {
+  user(field: String!, value: String!): UserDto!
+  login(password: String!, email: String!): LoginResponseDto!
+  register(username: String!, email: String!, password: String!, name: String!): LoginResponseDto!
+}

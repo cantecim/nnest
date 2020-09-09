@@ -16,6 +16,7 @@
     "prebuild": "yarn run build:libs && yarn run build:modules",
     "postinstall": "node ./scripts/linkPackages.js",
     "lerna:bootstrap": "lerna bootstrap",
+    "watch": "lerna run --parallel watch",
     "build": "yarn run build:apps",
     "build:apps": "lerna run --scope @nnest/core --parallel build",
     "build:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel build",
