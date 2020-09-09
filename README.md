@@ -66,6 +66,10 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 +-- modules // nest module packages
 |   +-- <module> // typical nestjs module folder structure
 |   |   +-- src // module sources
+|   |   |   +-- exceptions // exception classes
+|   |   |   +-- helpers // helper methods, etc.
+|   |   |   +-- interceptors // interceptor classes
+|   |   |   +-- middlewares // express middlewares
 |   |   +-- dist // module compiled sources
 ```
 
