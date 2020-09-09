@@ -24,7 +24,9 @@
     "clean": "lerna run --parallel clean",
     "clean:apps": "lerna run --scope @nnest/core --parallel build",
     "clean:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel clean",
-    "clean:modules": "lerna run --scope @nnest/{'mongoose,winston,auth,users,api'} --parallel clean"
+    "clean:modules": "lerna run --scope @nnest/{'mongoose,winston,auth,users,api'} --parallel clean",
+    "lint": "lerna run lint --parallel",
+    "lint:fix": "lerna run lint:fix --parallel"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.2.0",
@@ -34,6 +36,7 @@
     "eslint-plugin-import": "^2.22.0",
     "fs-extra": "^9.0.1",
     "get-yarn-workspaces": "^1.0.2",
+    "husky": "^4.3.0",
     "lerna": "^3.22.1",
     "lodash.get": "^4.4.2",
     "prettier": "2.1.1",
@@ -43,5 +46,10 @@
     "apps/*",
     "modules/*",
     "libs/*"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint"
+    }
+  }
 }
