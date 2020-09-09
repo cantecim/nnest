@@ -5,7 +5,7 @@ import { UsersService } from './users.service';
 import { PassportModule } from '@nestjs/passport';
 import { UsersResolver } from './users.resolver';
 import { TypegooseModule } from "nestjs-typegoose";
-import { UserSchema } from "./schema/user.schema";
+import { UserSchema } from "./schemas/user.schema";
 
 @Module({
   imports: [

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { classToPlain, plainToClass } from 'class-transformer';
 import { UserDto } from './dtos/user.dto';
 import { InjectModel } from 'nestjs-typegoose';
-import { UserSchema } from './schema/user.schema';
+import { UserSchema } from './schemas/user.schema';
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-or-reject';
 import { RegisterUserDto } from './dtos/register-user-dto';

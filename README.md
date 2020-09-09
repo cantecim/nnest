@@ -68,8 +68,11 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 |   |   +-- src // module sources
 |   |   |   +-- exceptions // exception classes
 |   |   |   +-- helpers // helper methods, etc.
-|   |   |   +-- interceptors // interceptor classes
+|   |   |   +-- interceptors // nestjs interceptor classes
 |   |   |   +-- middlewares // express middlewares
+|   |   |   +-- filters // nestjs filter classes
+|   |   |   +-- dtos // dto classes
+|   |   |   +-- schemas // mongoose schema classes using typegoose
 |   |   +-- dist // module compiled sources
 ```
 
