@@ -17,7 +17,10 @@
     "baseUrl": "./",
     "incremental": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@nnest/*": ["../../modules/*", "../../libs/**/src/*", "../../apps/**/src/*"]
+    }
   },
   "exclude": [
     "node_modules",
