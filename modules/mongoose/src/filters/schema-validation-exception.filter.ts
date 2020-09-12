@@ -12,9 +12,10 @@ export class SchemaValidationExceptionFilter implements ExceptionFilter {
   catch(exception: SchemaValidationException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    const statusCode = HttpStatus.BAD_REQUEST;
 
-    response.status(HttpStatus.BAD_REQUEST).json({
-      statusCode: HttpStatus.BAD_REQUEST,
+    response.status(statusCode).json({
+      statusCode,
       message: exception.errors,
       error: 'Bad Request',
     });

@@ -12,9 +12,10 @@ export class SchemaDuplicateRecordExceptionFilter implements ExceptionFilter {
   catch(exception: SchemaDuplicateRecordException, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    const statusCode = HttpStatus.BAD_REQUEST;
 
-    response.status(HttpStatus.BAD_REQUEST).json({
-      statusCode: HttpStatus.BAD_REQUEST,
+    response.status(statusCode).json({
+      statusCode,
       message: {
         message: exception.message,
         keyValue: exception.keyValue

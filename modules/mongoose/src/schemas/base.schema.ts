@@ -3,6 +3,7 @@ import { schemaValidateOrReject } from '../helpers/schema-validate-or-reject';
 import { defaultClasses, DocumentType, post, pre } from '@typegoose/typegoose';
 import { Error as _MongooseError } from 'mongoose';
 import { SchemaDuplicateRecordException } from "../exceptions/schema-duplicate-record.exception";
+import { MongoException } from "../exceptions/mongo.exception";
 
 type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, string> };
 
@@ -21,7 +22,7 @@ type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, 
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new SchemaDuplicateRecordException(error.keyValue));
   } else {
-    next();
+    next(new MongoException(error.code));
   }
 })
 export class BaseSchema extends defaultClasses.TimeStamps {

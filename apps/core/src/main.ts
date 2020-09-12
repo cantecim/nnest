@@ -14,6 +14,7 @@ import { globalLogger } from '@nnest/winston/winston.module';
 import { SchemaValidationExceptionFilter } from '@nnest/mongoose/filters/schema-validation-exception.filter';
 import { SchemaDuplicateRecordExceptionFilter } from '@nnest/mongoose/filters/schema-duplicate-record-exception.filter';
 import { ResponseWrapperInterceptor } from '@nnest/api/interceptors/response-wrapper.interceptor';
+import { MongoExceptionFilter } from "@nnest/mongoose/filters/mongo-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -37,6 +38,7 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new SchemaValidationExceptionFilter());
   app.useGlobalFilters(new SchemaDuplicateRecordExceptionFilter());
+  app.useGlobalFilters(new MongoExceptionFilter());
 
   const options = new DocumentBuilder()
     .setTitle('REST API Documentations')
