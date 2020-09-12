@@ -19,7 +19,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "paths": {
-      "@nnest/*": ["../../modules/*", "../../libs/**/src/*", "../../apps/**/src/*"]
+      "@nnest/*": ["../../modules/*", "../../libs/*", "../../apps/*"]
     }
   },
   "exclude": [
