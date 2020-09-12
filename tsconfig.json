@@ -15,6 +15,9 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@nnest/*": ["../../modules/*", "../../libs/*", "../../aps/*"]
+    }
   }
 }
