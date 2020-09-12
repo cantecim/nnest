@@ -14,7 +14,8 @@
   },
   "scripts": {
     "prebuild": "yarn run build:libs && yarn run build:modules",
-    "postinstall": "node ./scripts/linkPackages.js",
+    "postinstall": "yarn run link",
+    "link": "node ./scripts/linkPackages.js",
     "lerna:bootstrap": "lerna bootstrap",
     "watch": "lerna run --parallel watch",
     "build": "yarn run build:apps",
