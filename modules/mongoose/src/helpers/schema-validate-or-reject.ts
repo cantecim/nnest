@@ -1,11 +1,14 @@
 import { ValidatorOptions, validate } from 'class-validator';
 import { SchemaValidationException } from '../exceptions/schema-validation.exception';
-import { plainToClass } from "class-transformer";
+import { plainToClass, classToPlain } from "class-transformer";
 import { DocumentType } from "@typegoose/typegoose";
-import { SchemaType } from "mongoose";
+import { DocumentToObjectOptions, SchemaType } from 'mongoose';
 import { ClassType } from "class-transformer/ClassTransformer";
 import { ClassTransformOptions } from "class-transformer/ClassTransformOptions";
 
+function documentToPojo(doc: DocumentType<any>) {
+  return JSON.parse(JSON.stringify(doc));
+}
 type Class = { new(...args: any[]): any; };
 export const defaultValidatorOptions: ValidatorOptions = { validationError: { target: false, value: false } };
 export async function schemaValidateOrReject<T>(
@@ -36,7 +39,7 @@ export async function schemaValidateOrReject<T>(
     // mongooseSchemaOrSchemaName = schemaName, objectOrMongooseSchema = mongooseSchema, ValidatorOptionsOrObject = object
     errors = await validate(
       mongooseSchemaOrSchemaName as string,
-      plainToClass(objectOrMongooseSchema, (ValidatorOptionsOrObject as DocumentType<any>).toJSON(), ptcOptions),
+      plainToClass(objectOrMongooseSchema, documentToPojo(ValidatorOptionsOrObject as DocumentType<any>), ptcOptions),
       maybeValidatorOptions,
     );
   } else {
@@ -47,7 +50,7 @@ export async function schemaValidateOrReject<T>(
     errors = await validate(
       plainToClass(
         mongooseSchemaOrSchemaName as unknown as ClassType<SchemaType>,
-        (objectOrMongooseSchema as DocumentType<any>).toJSON(),
+        documentToPojo(objectOrMongooseSchema as DocumentType<any>),
         ptcOptions
       ),
       ValidatorOptionsOrObject as ValidatorOptions,

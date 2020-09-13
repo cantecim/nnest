@@ -1,6 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { schemaValidateOrReject } from '../helpers/schema-validate-or-reject';
-import { defaultClasses, DocumentType, post, pre } from '@typegoose/typegoose';
+import { defaultClasses, DocumentType, getClassForDocument, post, pre } from '@typegoose/typegoose';
 import { Error as _MongooseError } from 'mongoose';
 import { SchemaDuplicateRecordException } from "../exceptions/schema-duplicate-record.exception";
 import { MongoException } from "../exceptions/mongo.exception";
@@ -11,8 +11,12 @@ type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, 
   isAbstract: true,
 })
 @pre<BaseSchema>('save', async function () {
-  // this.constructor points to late class
-  await schemaValidateOrReject(this.constructor, this);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore-next-line
+  if(this.$isSingleNested || this.$isSchemaMap || this.$isArraySubdocument || this.$isDocumentArrayElement) {
+    return;
+  }
+  await schemaValidateOrReject(getClassForDocument(this), this);
 })
 @post<BaseSchema>('save', function (
   error: MongooseError,
@@ -21,8 +25,10 @@ type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, 
 ) {
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new SchemaDuplicateRecordException(error.keyValue));
-  } else {
+  } else if(error.name === "MongoError") {
     next(new MongoException(error.name, error.code));
+  } else {
+    next()
   }
 })
 export class BaseSchema extends defaultClasses.TimeStamps {
