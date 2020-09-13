@@ -22,7 +22,7 @@ type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, 
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new SchemaDuplicateRecordException(error.keyValue));
   } else {
-    next(new MongoException(error.code));
+    next(new MongoException(error.name, error.code));
   }
 })
 export class BaseSchema extends defaultClasses.TimeStamps {
