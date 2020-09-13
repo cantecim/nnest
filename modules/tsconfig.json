@@ -1,3 +1,13 @@
 {
-  "extends": "../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@nnest/api": ["../api/src/*"],
+      "@nnest/auth": ["../auth/src/*"],
+      "@nnest/mongoose": ["../mongoose/src/*"],
+      "@nnest/users": ["../users/src/*"],
+      "@nnest/winston": ["../winston/src/*"],
+      "@nnest/vocaburst-words": ["../vocaburst-words/src/*"]
+    }
+  }
 }

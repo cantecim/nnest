@@ -1,3 +1,10 @@
 {
-  "extends": "../tsconfig.json"
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@nnest/guards": ["../guards/src/*"],
+      "@nnest/helpers": ["../helpers/src/*"],
+      "@nnest/patches": ["../patches/src/*"]
+    }
+  }
 }
