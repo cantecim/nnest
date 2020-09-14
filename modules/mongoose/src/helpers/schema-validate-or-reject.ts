@@ -1,8 +1,8 @@
 import { ValidatorOptions, validate } from 'class-validator';
 import { SchemaValidationException } from '../exceptions/schema-validation.exception';
-import { plainToClass, classToPlain } from "class-transformer";
+import { plainToClass } from "class-transformer";
 import { DocumentType } from "@typegoose/typegoose";
-import { DocumentToObjectOptions, SchemaType } from 'mongoose';
+import { SchemaType } from 'mongoose';
 import { ClassType } from "class-transformer/ClassTransformer";
 import { ClassTransformOptions } from "class-transformer/ClassTransformOptions";
 
