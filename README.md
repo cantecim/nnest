@@ -84,7 +84,7 @@ We have setup everything for you, a postinstall script takes care of linking pro
 
 ### Known-issues about packages
 
-Unfortunately, packages under **modules/*** might depend each other  
+Unfortunately, packages under **modules/*** might depend on each other  
 build:modules script should have correct order to build successfully  
 _Actually, currently we don't have circular dependency in modules_ 
   
