@@ -7,6 +7,7 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 - Lerna!
 - yarn workspaces configured
 - Well-defined folder structure
+- Husky! pre-push hook to force lint fixes
 - GraphQL (@nestjs/graphql graphql-tools graphql apollo-server-express tools)
 - MongoDB support (mongoose @typegoose/typegoose dev:@types/mongoose)
 - nestjs-typegoose module (@nestjs-typegoose)
@@ -86,7 +87,7 @@ We have setup everything for you, a postinstall script takes care of linking pro
 
 ### Known-issues about packages
 
-Unfortunately, packages under **modules/*** might depend each other  
+Unfortunately, packages under **modules/*** might depend on each other  
 build:modules script should have correct order to build successfully  
 _Actually, currently we don't have circular dependency in modules_ 
   
@@ -136,13 +137,17 @@ So this means to you that you need to be a little extra carefull about your dtos
 - Be sure to add **@Expose** decorator to all properties in your class
     - otherwise class-transformer won't be able to transform properties
 - We are explicitly setting an options parameter to set excludeExtraneousValues to **false** on automatic document validation function **schemaValidateOrReject**
-    - that way you don't need to use **@Expose** parameter on you schemas
+    - that way you don't need to use **@Expose** parameter on your schemas
 
 
 ## How to use mongoose? is there any quirks?
 
 ### Automatic Document validation support
-Be sure to extend you schemas from **BaseSchema** inside @nnest/mongoose module  
+We have set up a method to automatically validate your documents before inserting them, on pre save middleware of mongoose, we are calling our beatiful **schemaValidateOrReject** helper to validate the document with the rules defined in your schema class using **class-validator**
+
+So, all of the **class-validator** features are available to serve you! even **@ValidateNested** on your maps, array, etc.
+
+Be sure to extend your schemas from **BaseSchema** inside @nnest/mongoose module  
 otherwise this feature won't work, as we build that on the **BaseSchema**
 
 ## Exception handling and validations
