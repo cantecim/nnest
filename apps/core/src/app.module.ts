@@ -19,7 +19,7 @@ import { MongooseModule } from "@nnest/mongoose/mongoose.module";
       debug: process.env.NODE_ENV !== 'production',
       playground: true,
     }),
-    UsersModule,
+    UsersModule.register(),
     MongooseModule,
     WinstonModule,
     AuthModule
