@@ -1,8 +1,9 @@
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
-import { index, modelOptions, pre, prop } from "@typegoose/typegoose";
+import { index, modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
 import { BaseSchema } from '@nnest/mongoose/schemas/base.schema';
 import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-or-reject';
+import { getUserProfileSchemaClass, UserProfileSchemaType } from "./user-profile.schema";
 
 @pre<BaseSchema>('save', async function () {
   await schemaValidateOrReject(UserSchema, this);
@@ -32,4 +33,9 @@ export class UserSchema extends BaseSchema {
   @MinLength(8)
   @prop({ required: true })
   password!: string;
+
+  @prop({
+    ref: getUserProfileSchemaClass()
+  })
+  profile?: Ref<UserProfileSchemaType>;
 }
