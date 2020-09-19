@@ -73,6 +73,9 @@ Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 |   |   |   +-- filters // nestjs filter classes
 |   |   |   +-- dtos // dto classes
 |   |   |   +-- schemas // mongoose schema classes using typegoose
+|   |   |   +-- services // nestjs module services
+|   |   |   +-- controllers // nestjs module controllers
+|   |   |   +-- resolvers // nestjs module graphql resolvers
 |   |   +-- dist // module compiled sources
 ```
 

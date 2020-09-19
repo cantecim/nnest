@@ -1,7 +1,19 @@
-import { BaseSchema } from "@nnest/mongoose/schemas/base.schema";
-import { modelOptions, prop, Ref } from "@typegoose/typegoose";
-import { UserSchema } from "./user.schema";
 import { ClassType } from "class-transformer/ClassTransformer";
+import { modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { BaseSchema } from "@nnest/mongoose/schemas/base.schema";
+import { UserSchema } from "./user.schema";
+
+/*
+WARNING: In this file, we use string ref to avoid circular dependency problems
+ */
+
+let _userProfileSchema: any;
+export function setUserProfileSchemaClass<T extends UserProfileSchema>(sc: ClassType<T>): void {
+  _userProfileSchema = sc;
+}
+export function getUserProfileSchemaClass<T extends typeof UserProfileSchema>(): T {
+  return _userProfileSchema as T;
+}
 
 @modelOptions({
   schemaOptions: {
@@ -10,7 +22,7 @@ import { ClassType } from "class-transformer/ClassTransformer";
 })
 class UserProfileSchema extends BaseSchema {
   @prop({
-    ref: UserSchema,
+    ref: 'UserSchema',
     required: true,
   })
   user!: Ref<UserSchema>;
@@ -31,12 +43,5 @@ class UserProfileSchema extends BaseSchema {
   city!: string;
 }
 
+_userProfileSchema = UserProfileSchema;
 export type UserProfileSchemaType = typeof UserProfileSchema;
-
-let _userProfileSchema = UserProfileSchema;
-export function setUserProfileSchemaClass<T extends UserProfileSchema>(sc: ClassType<T>): void {
-  _userProfileSchema = sc;
-}
-export function getUserProfileSchemaClass<T extends typeof UserProfileSchema>(): T {
-  return _userProfileSchema as T;
-}

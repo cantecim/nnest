@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '@nnest/users/users.service';
+import { UserService } from '@nnest/users/services/user.service';
 import { RequestUserDto } from './dtos/request-user-dto';
 import { plainToClass, classToPlain } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ import { RegisterUserDto } from '@nnest/users/dtos/register-user-dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly usersService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 

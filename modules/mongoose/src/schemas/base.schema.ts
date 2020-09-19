@@ -1,4 +1,3 @@
-import { ObjectType } from '@nestjs/graphql';
 import { schemaValidateOrReject } from '../helpers/schema-validate-or-reject';
 import { defaultClasses, DocumentType, getClassForDocument, post, pre } from '@typegoose/typegoose';
 import { Error as _MongooseError } from 'mongoose';
@@ -7,9 +6,6 @@ import { MongoException } from "../exceptions/mongo.exception";
 
 type MongooseError = _MongooseError & { code?: number, keyValue: Record<string, string> };
 
-@ObjectType({
-  isAbstract: true,
-})
 @pre<BaseSchema>('save', async function () {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore-next-line

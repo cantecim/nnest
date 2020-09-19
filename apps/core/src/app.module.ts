@@ -7,22 +7,23 @@ import { ApiModule } from '@nnest/api/api.module';
 import { AuthModule } from '@nnest/auth/auth.module';
 import configOptions from '@nnest/helpers/config-options';
 import { join } from 'path';
-import { MongooseModule } from "@nnest/mongoose/mongoose.module";
+import { MongooseModule } from '@nnest/mongoose/mongoose.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
     ApiModule,
+    UsersModule.forRoot(),
+    MongooseModule,
+    WinstonModule,
+    AuthModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ req }),
       debug: process.env.NODE_ENV !== 'production',
       playground: true,
+      // include: [UsersModule]
     }),
-    UsersModule.forRoot(),
-    MongooseModule,
-    WinstonModule,
-    AuthModule
-  ]
+  ],
 })
 export class AppModule {}

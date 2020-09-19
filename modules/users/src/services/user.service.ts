@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
-import { UserDto } from './dtos/user.dto';
+import { UserDto } from '../dtos/user.dto';
 import { InjectModel } from 'nestjs-typegoose';
-import { UserSchema } from './schemas/user.schema';
+import { UserSchema } from '../schemas/user.schema';
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import { schemaValidateOrReject } from '@nnest/mongoose/helpers/schema-validate-or-reject';
-import { RegisterUserDto } from './dtos/register-user-dto';
+import { RegisterUserDto } from '../dtos/register-user-dto';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectModel(UserSchema)
     private readonly userModel: ReturnModelType<typeof UserSchema>,
