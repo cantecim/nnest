@@ -6,7 +6,7 @@ WARNING: In this file, we use string ref to avoid circular dependency problems
  */
 
 let _userProfileSchema: any;
-export function setUserProfileSchemaClass<T extends UserProfileSchema>(sc: T): void {
+export function setUserProfileSchemaClass<T extends typeof UserProfileSchema>(sc: T): void {
   _userProfileSchema = sc;
 }
 export function getUserProfileSchemaClass<T extends typeof UserProfileSchema>(): T {

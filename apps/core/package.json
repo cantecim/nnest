@@ -23,7 +23,7 @@
     "build:watch": "nest build -w",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "nest start --watch --preserveWatchOutput --tsc",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "watch": "npm run start:dev",
