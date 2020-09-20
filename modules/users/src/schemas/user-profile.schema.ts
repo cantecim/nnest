@@ -1,7 +1,6 @@
 import { ClassType } from "class-transformer/ClassTransformer";
-import { modelOptions, prop, Ref } from "@typegoose/typegoose";
+import { modelOptions, mongoose, prop } from "@typegoose/typegoose";
 import { BaseSchema } from "@nnest/mongoose/schemas/base.schema";
-import { UserSchema } from "./user.schema";
 
 /*
 WARNING: In this file, we use string ref to avoid circular dependency problems
@@ -25,7 +24,7 @@ class UserProfileSchema extends BaseSchema {
     ref: 'UserSchema',
     required: true,
   })
-  user!: Ref<UserSchema>;
+  user!: mongoose.Types.ObjectId;
 
   @prop({
     required: true

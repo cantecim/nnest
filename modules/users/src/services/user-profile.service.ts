@@ -18,7 +18,7 @@ export class UserProfileService {
   ) {}
 
   async createUserProfile<T extends IUserProfileDto = UserProfileDto>(
-    userProfile: ClassType<T>,
+    userProfile: T,
     user: DocumentType<UserSchema>,
   ): Promise<DocumentType<UserProfileSchemaType>> {
     const profile = classToPlain(userProfile);
