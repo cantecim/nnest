@@ -114,6 +114,62 @@ export class SomeService {
   }
 }
 ```
+## How to override UserProfileSchema
+Create a new schema with exact name **UserProfileSchema**
+
+```typescript
+import { getUserProfileSchemaClass } from '@nnest/users/schemas/user-profile.schema';
+import { mongoose, prop } from '@typegoose/typegoose';
+
+const BaseUserProfileSchema = getUserProfileSchemaClass<any>();
+export class UserProfileSchema extends BaseUserProfileSchema {
+  @prop({
+    ref: 'UserSchema',
+    required: true,
+  })
+  user!: mongoose.Types.ObjectId;
+
+  @prop({
+    required: true
+  })
+  country!: string;
+
+  @prop({
+    required: true
+  })
+  province!: string;
+
+  @prop({
+    required: true
+  })
+  city!: string;
+
+  @prop({
+    required: true
+  })
+  profile_addition!: string;
+}
+```
+
+As you can see we do not import UserSchema here to avoid circular dependency  
+Therefore, we don't use Ref class, user property type is ObjectId
+
+And top of your bootstrapping code, before any usage of **getUserProfileSchema** method  
+(usually in your main.ts of the app)
+
+```typescript
+import '@nnest/patches/class-transformer.patch';
+
+import { UserProfileSchema } from './user-profile.schema';
+import { setUserProfileSchemaClass } from '@nnest/users/schemas/user-profile.schema';
+// Set the new user profile schema for the app
+// Always set it on top of the main file, or in a file before any bootstrapping
+// Some decorators would call getUserProfileSchemaClass before you, so you might not catch the correct hierarchy
+setUserProfileSchemaClass(UserProfileSchema);
+```
+
+These codes added on second line of main.ts 
+ 
 ## How to design my services?
 
 ## For database CRUD operations
