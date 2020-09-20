@@ -18,6 +18,8 @@
     "link": "node ./scripts/linkPackages.js",
     "lerna:bootstrap": "lerna bootstrap",
     "watch": "lerna run --parallel watch",
+    "watch:others:core": "lerna run --ignore @nnest/core --parallel watch",
+    "watch:only:core": "lerna run --scope @nnest/core --stream watch",
     "build": "yarn run build:apps",
     "build:watch": "lerna run --parallel build:watch",
     "build:apps": "lerna run --scope @nnest/core --parallel build",

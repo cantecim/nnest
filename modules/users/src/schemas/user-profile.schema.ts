@@ -1,23 +1,40 @@
-import { modelOptions, mongoose, prop } from "@typegoose/typegoose";
-import { BaseSchema } from "@nnest/mongoose/schemas/base.schema";
+import { modelOptions, mongoose, prop } from '@typegoose/typegoose';
+import { BaseSchema } from '@nnest/mongoose/schemas/base.schema';
 
 /*
 WARNING: In this file, we use string ref to avoid circular dependency problems
  */
 
 let _userProfileSchema: any;
-export function setUserProfileSchemaClass<T extends typeof UserProfileSchema>(sc: T): void {
+
+export function setUserProfileSchemaClass<T extends typeof UserProfileSchema>(
+  sc: T,
+): void {
   _userProfileSchema = sc;
 }
-export function getUserProfileSchemaClass<T extends typeof UserProfileSchema>(): T {
+
+export function getUserProfileSchemaClass<
+  T extends typeof UserProfileSchema
+  >(): T {
   return _userProfileSchema as T;
 }
 
-@modelOptions({
-  schemaOptions: {
-    collection: 'users.profile'
-  }
-})
+function applyDecorators(): ClassDecorator {
+  return modelOptions({
+    schemaOptions: {
+      collection: 'users.profile',
+    },
+  });
+}
+
+export function getUserProfileSchemaAsBaseClass<T extends BaseSchema>(): T {
+  @applyDecorators()
+  class UserProfileSchemaAsBaseClass extends UserProfileSchema {}
+
+  return (UserProfileSchemaAsBaseClass as unknown) as T;
+}
+
+@applyDecorators()
 class UserProfileSchema extends BaseSchema {
   @prop({
     ref: 'UserSchema',
