@@ -20,9 +20,9 @@ export class UserProfileService {
   async createUserProfile<T extends IUserProfileDto = UserProfileDto>(
     userProfile: ClassType<T>,
     user: DocumentType<UserSchema>,
-  ): Promise<DocumentType<any>> {
+  ): Promise<DocumentType<UserProfileSchemaType>> {
     const profile = classToPlain(userProfile);
     profile.user = user._id.toString();
-    this.userProfileModel.create(profile as any);
+    return this.userProfileModel.create(profile as any) as unknown as DocumentType<UserProfileSchemaType>;
   }
 }
