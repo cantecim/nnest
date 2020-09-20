@@ -24,21 +24,6 @@ class UserProfileSchema extends BaseSchema {
     required: true,
   })
   user!: mongoose.Types.ObjectId;
-
-  @prop({
-    required: true
-  })
-  country!: string;
-
-  @prop({
-    required: true
-  })
-  province!: string;
-
-  @prop({
-    required: true
-  })
-  city!: string;
 }
 
 _userProfileSchema = UserProfileSchema;
