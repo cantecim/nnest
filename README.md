@@ -169,7 +169,23 @@ setUserProfileSchemaClass(UserProfileSchema);
 ```
 
 These codes added on second line of main.ts 
- 
+
+When you want to create user profile record, use **UserProfileService**'s **createUserProfile** method  
+
+```typescript
+class SomeService {
+  constructor(private readonly userProfileService: UserProfileService) {}
+
+  async someMethod(user: DocumentType<UserSchema>) {
+    return this.userProfileService.createUserProfile<SomeInterfaceToTypeHintMyOverrideSchema>({
+    ....
+    }, user);
+  }
+}
+```
+
+Note that you might want to use an Interface to get a correct typehinting like in the example pseudo code
+
 ## How to design my services?
 
 ## For database CRUD operations
