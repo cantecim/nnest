@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import { classToPlain } from 'class-transformer';
-import { ClassType } from 'class-transformer/ClassTransformer';
 import { InjectModel } from 'nestjs-typegoose';
 import { IUserProfileDto, UserProfileDto } from '../dtos/user.profile.dto';
 import {
