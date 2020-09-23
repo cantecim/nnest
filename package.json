@@ -23,11 +23,11 @@
     "build": "yarn run build:apps",
     "build:watch": "lerna run --parallel build:watch",
     "build:apps": "lerna run --scope @nnest/core --parallel build",
-    "build:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel build",
+    "build:libs": "lerna run --scope @nnest/{'helpers,patches,guards,validations'} --parallel build",
     "build:modules": "lerna run --scope @nnest/mongoose --scope @nnest/winston --scope @nnest/auth --scope @nnest/users --scope @nnest/api build",
     "clean": "lerna run --parallel clean",
     "clean:apps": "lerna run --scope @nnest/core --parallel build",
-    "clean:libs": "lerna run --scope @nnest/{'helpers,patches,guards'} --parallel clean",
+    "clean:libs": "lerna run --scope @nnest/{'helpers,patches,guards,validations'} --parallel clean",
     "clean:modules": "lerna run --scope @nnest/{'mongoose,winston,auth,users,api'} --parallel clean",
     "lint": "lerna run lint --parallel",
     "lint:fix": "lerna run lint:fix --parallel"
