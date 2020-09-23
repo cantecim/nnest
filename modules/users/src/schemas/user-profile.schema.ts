@@ -1,4 +1,4 @@
-import { modelOptions, mongoose, prop } from '@typegoose/typegoose';
+import { index, modelOptions, mongoose, prop } from "@typegoose/typegoose";
 import { BaseSchema } from '@nnest/mongoose/schemas/base.schema';
 
 /*
@@ -20,11 +20,17 @@ export function getUserProfileSchemaClass<
 }
 
 function applyDecorators(): ClassDecorator {
-  return modelOptions({
-    schemaOptions: {
-      collection: 'users.profile',
-    },
-  });
+  return function (target: any) {
+    const mo = modelOptions({
+      schemaOptions: {
+        collection: 'users.profile',
+      },
+    });
+    const userIndex = index({user: 1}, { unique: true});
+
+    mo(target);
+    userIndex(target);
+  };
 }
 
 export function getUserProfileSchemaAsBaseClass<T extends BaseSchema>(): T {
