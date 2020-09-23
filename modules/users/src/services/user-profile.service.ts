@@ -16,12 +16,22 @@ export class UserProfileService {
     private readonly userProfileModel: ReturnModelType<UserProfileSchemaType>,
   ) {}
 
-  async createUserProfile<T extends IUserProfileDto = UserProfileDto>(
+  async createOrUpdateUserProfile<T extends IUserProfileDto = UserProfileDto>(
     userProfile: T,
     user: DocumentType<UserSchema>,
   ): Promise<DocumentType<UserProfileSchemaType>> {
     const profile = classToPlain(userProfile);
     profile.user = user._id.toString();
-    return this.userProfileModel.create(profile as any) as unknown as DocumentType<UserProfileSchemaType>;
+    const up = await this.userProfileModel.findOne(
+      {
+        user: profile.user,
+      },
+    );
+    if(up) {
+      Object.assign(up, userProfile);
+      return up.save() as unknown as DocumentType<UserProfileSchemaType>;
+    } else {
+      return this.userProfileModel.create(profile as any) as unknown as DocumentType<UserProfileSchemaType>;
+    }
   }
 }
