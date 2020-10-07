@@ -7,11 +7,15 @@ import { RequestUserDto } from "./request-user-dto";
 export class LoginResponseDto {
   @Field()
   @Expose()
-  @ApiProperty()
+  @ApiProperty({
+    description: "Bearer access token"
+  })
   access_token!: string;
 
   @Field()
   @Expose()
-  @ApiProperty()
+  @ApiProperty({
+    description: "User object for logged in user"
+  })
   user!: RequestUserDto
 }

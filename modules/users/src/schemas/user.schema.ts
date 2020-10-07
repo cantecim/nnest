@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, Length, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { index, modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
@@ -16,24 +17,46 @@ import { getUserProfileSchemaClass, UserProfileSchemaType } from "./user-profile
   }
 })
 export class UserSchema extends BaseSchema {
+  @ApiProperty({
+    description: "Full name",
+    minLength: 3,
+    maxLength: 20
+  })
   @Length(3, 20)
   @prop({ required: true })
   name!: string;
 
+  @ApiProperty({
+    description: "Username of the user",
+    minLength: 3,
+    maxLength: 15
+  })
   @Length(3, 15)
   @IsString()
   @prop({ required: true })
   username!: string;
 
+  @ApiProperty({
+    description: "E-Mail address",
+    format: "email"
+  })
   @IsEmail()
   @prop({ required: true })
   email!: string;
 
+  @ApiProperty({
+    description: "Login password",
+    minLength: 8,
+  })
   @Exclude({ toPlainOnly: true })
   @MinLength(8)
   @prop({ required: true })
   password!: string;
 
+  @ApiProperty({
+    description: "User profile object",
+    type: getUserProfileSchemaClass()
+  })
   @prop({
     ref: getUserProfileSchemaClass()
   })

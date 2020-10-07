@@ -8,7 +8,7 @@ import {
 import { LocalAuthGuard } from '@nnest/guards/local-auth-guard';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register-dto';
-import { ApiBody, ApiTags, ApiCreatedResponse } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { LoginDto } from './dtos/login-dto';
 import { LoginResponseDto } from './dtos/login-response-dto';
 
@@ -19,6 +19,9 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
+  @ApiOperation({
+    summary: "Login with user information to get an access token"
+  })
   @ApiBody({
     type: LoginDto,
     description: 'Login payload',
@@ -31,6 +34,9 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @ApiOperation({
+    summary: "Register a new user"
+  })
   @Post('register')
   @ApiCreatedResponse({
     description: 'The register successful',
@@ -40,6 +46,9 @@ export class AuthController {
     return this.authService.register(payload);
   }
 
+  @ApiOperation({
+    summary: "Check if given email is available"
+  })
   @Post('is-email-available')
   @ApiCreatedResponse({
     schema: {
@@ -53,7 +62,7 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', description: 'E-Mail' },
+        email: { type: 'string', description: 'E-Mail address to check availability' },
       },
     },
   })
@@ -63,6 +72,9 @@ export class AuthController {
     };
   }
 
+  @ApiOperation({
+    summary: "Check if given username is available"
+  })
   @Post('is-username-available')
   @ApiCreatedResponse({
     schema: {
@@ -76,7 +88,7 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', description: 'E-Mail' },
+        username: { type: 'string', description: 'Username to check availability' },
       },
     },
   })

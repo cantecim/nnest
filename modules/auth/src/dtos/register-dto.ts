@@ -10,6 +10,8 @@ export class RegisterDto {
   @IsString()
   @ApiProperty({
     description: 'username',
+    minLength: 3,
+    maxLength: 15
   })
   @Expose()
   username!: string;
@@ -27,6 +29,7 @@ export class RegisterDto {
   @MinLength(8)
   @ApiProperty({
     description: 'password',
+    minLength: 8
   })
   @Expose()
   password!: string;
@@ -34,7 +37,9 @@ export class RegisterDto {
   @Field()
   @Length(3, 20)
   @ApiProperty({
-    description: 'name',
+    description: 'Full name',
+    minLength: 3,
+    maxLength: 20
   })
   @Expose()
   name!: string;
