@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import { classToPlain } from 'class-transformer';
 import { InjectModel } from 'nestjs-typegoose';
@@ -15,6 +15,15 @@ export class UserProfileService {
     @InjectModel(getUserProfileSchemaClass())
     private readonly userProfileModel: ReturnModelType<UserProfileSchemaType>,
   ) {}
+
+  async getOne(id: string): Promise<DocumentType<UserProfileSchemaType>> {
+    const doc = await this.userProfileModel.findById(id).findOne();
+    if(!doc) {
+      throw new NotFoundException("No user found with this id");
+    }
+
+    return doc as unknown as DocumentType<UserProfileSchemaType>;
+  }
 
   async createOrUpdateUserProfile<T extends IUserProfileDto = UserProfileDto>(
     userProfile: T,
