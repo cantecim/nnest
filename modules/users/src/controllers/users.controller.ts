@@ -11,7 +11,7 @@ export class UsersController {
   }
 
   @Get(':id/profile')
-  async getOne(@Param(":id") userId: string): Promise<DocumentType<UserProfileSchemaType>> {
+  async getOne(@Param("id") userId: string): Promise<DocumentType<UserProfileSchemaType>> {
     return this.userProfileService.getOne(userId);
   }
 }
