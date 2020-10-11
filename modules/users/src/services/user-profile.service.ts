@@ -16,8 +16,10 @@ export class UserProfileService {
     private readonly userProfileModel: ReturnModelType<UserProfileSchemaType>,
   ) {}
 
-  async getOne(id: string): Promise<DocumentType<UserProfileSchemaType>> {
-    const doc = await this.userProfileModel.findById(id).findOne();
+  async getOne(user: string): Promise<DocumentType<UserProfileSchemaType>> {
+    const doc = await this.userProfileModel.findOne({
+      user
+    });
     if(!doc) {
       throw new NotFoundException("No user found with this id");
     }
