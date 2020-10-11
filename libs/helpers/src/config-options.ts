@@ -37,36 +37,12 @@ export const ConfigurationsEnum: IConfigurationObj = {
   },
 
   db: {
-    sqliteInDev: {
-      key: 'SQLITE_IN_DEV',
-      default: 'false',
+    uri: {
+      key: 'DATABASE_URI',
+      default: 'mongodb://localhost:27017/nnest',
     },
-    driver: {
-      key: 'DATABASE_DRIVER',
-      default: 'postgres',
-    },
-    host: {
-      key: 'DATABASE_HOST',
-      default: 'localhost',
-    },
-    port: {
-      key: 'DATABASE_PORT',
-      default: '5432'
-    },
-    username: {
-      key: 'DATABASE_USERNAME',
-      default: 'default'
-    },
-    password: {
-      key: 'DATABASE_PASSWORD',
-      default: 'secret'
-    },
-    name: {
-      key: 'DATABASE_NAME',
-      default: 'my_app'
-    },
-    migrationsRun: {
-      key: 'DATABASE_MIGRATIONS_RUN',
+    debug: {
+      key: 'DATABASE_DEBUG',
       default: 'true'
     }
   },
