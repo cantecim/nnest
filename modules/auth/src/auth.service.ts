@@ -66,7 +66,10 @@ export class AuthService {
     });
     return {
       access_token: this.jwtService.sign(classToPlain(payload)),
-      user: plainToClass(RequestUserDto, savedUser, {
+      user: plainToClass(RequestUserDto, {
+        ...savedUser,
+        id: savedUser._id
+      }, {
         excludeExtraneousValues: true,
       }),
     };
