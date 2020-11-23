@@ -298,3 +298,6 @@ src/schema.gql
 
 # pyenv files
 .python-version
+
+# ultra-runner
+.ultra.cache.json
