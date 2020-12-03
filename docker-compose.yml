@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  nnest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nnest
+    container_name: nnest
+    ports:
+    - "3000"
