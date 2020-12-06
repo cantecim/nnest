@@ -11,7 +11,7 @@ RUN set -xe; \
 COPY . .
 
 RUN set -xe; \
-    yarn && \
+    yarn --prod && \
     yarn build:all
 
 EXPOSE 3000
