@@ -11,6 +11,8 @@ RUN set -xe; \
 COPY . .
 
 RUN set -xe; \
+    rm -rf ./scripts/linkPackages.js && \
+    touch ./scripts/linkPackages.js && \
     yarn --prod && \
     yarn build:all
 
