@@ -4,16 +4,15 @@ WORKDIR /app
 
 COPY package.json .
 
+ENV HUSKY_SKIP_INSTALL=1
 RUN set -xe; \
     mkdir ./scripts && touch ./scripts/linkPackages.js && \
-    yarn --prod
+    yarn
 
 COPY . .
 
 RUN set -xe; \
-    rm -rf ./scripts/linkPackages.js && \
-    touch ./scripts/linkPackages.js && \
-    yarn --prod && \
+    yarn && \
     yarn build:all
 
 EXPOSE 3000
