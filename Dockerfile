@@ -6,7 +6,7 @@ COPY package.json .
 
 RUN set -xe; \
     mkdir ./scripts && touch ./scripts/linkPackages.js && \
-    yarn
+    yarn --prod
 
 COPY . .
 
