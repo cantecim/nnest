@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, Length, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, Length, MinLength } from 'class-validator';
 import { Exclude } from 'class-transformer';
 import { index, modelOptions, pre, prop, Ref } from "@typegoose/typegoose";
 import { BaseSchema } from '@nnest/mongoose/schemas/base.schema';
@@ -31,6 +31,7 @@ export class UserSchema extends BaseSchema {
     minLength: 3,
     maxLength: 15
   })
+  @IsOptional()
   @Length(3, 15)
   @IsString()
   @prop({ required: false })

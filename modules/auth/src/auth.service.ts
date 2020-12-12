@@ -30,7 +30,7 @@ export class AuthService {
         password: string;
         _id: string;
         name: string;
-        username: string;
+        username?: string;
         email: string;
       } = user;
       const reqUser = plainToClass(RequestUserDto, result, {

@@ -7,7 +7,7 @@ export class RequestUserDto {
   @ApiProperty()
   @Expose()
   @Field()
-  username!: string;
+  username?: string;
 
   @ApiProperty()
   @Expose()
