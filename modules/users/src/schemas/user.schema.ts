@@ -33,8 +33,8 @@ export class UserSchema extends BaseSchema {
   })
   @Length(3, 15)
   @IsString()
-  @prop({ required: true })
-  username!: string;
+  @prop({ required: false })
+  username?: string;
 
   @ApiProperty({
     description: "E-Mail address",

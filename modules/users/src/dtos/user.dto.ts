@@ -13,7 +13,7 @@ export class UserDto {
   @Length(3, 15)
   @IsString()
   @Expose()
-  username!: string;
+  username?: string;
 
   @Field()
   @IsEmail()
