@@ -1,9 +1,9 @@
 ![https://nestjs.com/img/logo_text.svg](https://nestjs.com/img/logo_text.svg)
 
-> WARNING ⚠️
-> This is an outdated repository, and it was in progress when it was developed
-> Only meant to be used in test or dev environments, have to be further developed to use in production-ready systems
-> Coding style, lint fixes, etc, should be taken care of.
+> ⚠️ WARNING ⚠️  
+> This is an outdated repository, and it was in progress when it was developed  
+> Only meant to be used in test or dev environments, have to be further developed to use in production-ready systems  
+> Coding style, lint fixes, etc, should be taken care of.  
 
 Another starter for [Nest](https://github.com/nestjs/nest) as a monorepo!
 
